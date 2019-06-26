@@ -192,14 +192,13 @@
                                 $.messager.alert("消息提醒","请检查你输入的数据!","warning");
                                 return;
                             } else{
-                                //var gradeid = $("#add_gradeList").combobox("getValue");
                                 $.ajax({
                                     type: "post",
-                                    url: "ClazzServlet?method=EditClazz",
+                                    url:/*[[@{/clazz/editClazz}]]*/,
                                     data: $("#editForm").serialize(),
-                                    success: function(msg){
-                                        if(msg == "success"){
-                                            $.messager.alert("消息提醒","修改成功!","info");
+                                    success: function(data){
+                                        if(data.success){
+                                            $.messager.alert("消息提醒",data.message,"info");
                                             //关闭窗口
                                             $("#editDialog").dialog("close");
                                             //清空原表格数据
@@ -210,7 +209,7 @@
                                             $('#dataList').datagrid("reload");
 
                                         } else{
-                                            $.messager.alert("消息提醒","修改失败!","warning");
+                                            $.messager.alert("消息提醒",data.message,"warning");
                                             return;
                                         }
                                     }

@@ -39,4 +39,7 @@
         </where>
     </delete>
 
+    <update id="editClazz" parameterType="Clazz">
+        update s_clazz set name = #{name},info = #{info} where id = #{id}
+    </update>
 </mapper>

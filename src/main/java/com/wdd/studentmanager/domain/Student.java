@@ -1,22 +1,21 @@
 package com.wdd.studentmanager.domain;
 
-import org.springframework.stereotype.Component;
+import java.io.InputStream;
 
-
-@Component
 public class Student {
-	private Long id;
-	private String sn;//ѧ��
-	private Long clazzId;//�༶id
-	private String username;
+	private int id;
+	private String sn;//学号
+	private String name;
 	private String password;
-	private String sex;
-	private String photo;//ͷ��
-	private String remark;//��ע
-	public Long getId() {
+	private int clazzId;
+	private String sex = "男";
+	private String mobile;
+	private String qq;
+	private InputStream photo;//头像
+	public int getId() {
 		return id;
 	}
-	public void setId(Long id) {
+	public void setId(int id) {
 		this.id = id;
 	}
 	public String getSn() {
@@ -25,23 +24,11 @@ public class Student {
 	public void setSn(String sn) {
 		this.sn = sn;
 	}
-	public Long getClazzId() {
+	public int getClazzId() {
 		return clazzId;
 	}
-	public void setClazzId(Long clazzId) {
+	public void setClazzId(int clazzId) {
 		this.clazzId = clazzId;
-	}
-	public String getUsername() {
-		return username;
-	}
-	public void setUsername(String username) {
-		this.username = username;
-	}
-	public String getPassword() {
-		return password;
-	}
-	public void setPassword(String password) {
-		this.password = password;
 	}
 	public String getSex() {
 		return sex;
@@ -49,17 +36,35 @@ public class Student {
 	public void setSex(String sex) {
 		this.sex = sex;
 	}
-	public String getPhoto() {
+	public String getMobile() {
+		return mobile;
+	}
+	public void setMobile(String mobile) {
+		this.mobile = mobile;
+	}
+	public String getQq() {
+		return qq;
+	}
+	public void setQq(String qq) {
+		this.qq = qq;
+	}
+	public InputStream getPhoto() {
 		return photo;
 	}
-	public void setPhoto(String photo) {
+	public void setPhoto(InputStream photo) {
 		this.photo = photo;
 	}
-	public String getRemark() {
-		return remark;
+	public String getName() {
+		return name;
 	}
-	public void setRemark(String remark) {
-		this.remark = remark;
+	public void setName(String name) {
+		this.name = name;
+	}
+	public String getPassword() {
+		return password;
+	}
+	public void setPassword(String password) {
+		this.password = password;
 	}
 	
 	

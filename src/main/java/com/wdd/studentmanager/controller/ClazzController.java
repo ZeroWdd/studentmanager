@@ -8,10 +8,7 @@ import com.wdd.studentmanager.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.HashMap;
 import java.util.Map;
@@ -47,16 +44,21 @@ public class ClazzController {
      */
     @PostMapping("/getClazzList")
     @ResponseBody
-    public Object getClazzList(Integer page, Integer rows,String clazzName){
+    public Object getClazzList(@RequestParam(value = "page", defaultValue = "1")Integer page,
+                               @RequestParam(value = "rows", defaultValue = "100")Integer rows, String clazzName, String from){
         Map<String,Object> paramMap = new HashMap();
         paramMap.put("pageno",page);
         paramMap.put("pagesize",rows);
         if(!StringUtils.isEmpty(clazzName))  paramMap.put("name",clazzName);
         PageBean<Clazz> pageBean = clazzService.queryPage(paramMap);
-        Map<String,Object> result = new HashMap();
-        result.put("total",pageBean.getTotalsize());
-        result.put("rows",pageBean.getDatas());
-        return result;
+        if(!StringUtils.isEmpty(from) && from.equals("combox")){
+            return pageBean.getDatas();
+        }else{
+            Map<String,Object> result = new HashMap();
+            result.put("total",pageBean.getTotalsize());
+            result.put("rows",pageBean.getDatas());
+            return result;
+        }
     }
 
     /**
@@ -107,6 +109,32 @@ public class ClazzController {
             e.printStackTrace();
             ajaxResult.setSuccess(false);
             ajaxResult.setMessage("删除失败,该班级存在老师或学生");
+        }
+        return ajaxResult;
+    }
+
+    /**
+     * 班级修改
+     * @param clazz
+     * @return
+     */
+    @PostMapping("/editClazz")
+    @ResponseBody
+    public AjaxResult editClazz(Clazz clazz){
+        AjaxResult ajaxResult = new AjaxResult();
+        try {
+            int count = clazzService.editClazz(clazz);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("修改成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("修改失败");
         }
         return ajaxResult;
     }
