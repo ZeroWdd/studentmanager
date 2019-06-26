@@ -1,0 +1,42 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.ClazzMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Clazz" id="ClazzInfo">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="ClazzInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_clazz
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_clazz
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+        </where>
+    </select>
+
+    <insert id="addClazz" parameterType="Clazz">
+        insert into s_clazz(name,info) values(#{name},#{info})
+    </insert>
+
+    <delete id="deleteClazz" parameterType="java.util.ArrayList">
+        delete from s_clazz
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
+
+</mapper>
