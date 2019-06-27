@@ -62,7 +62,6 @@
                     $.each(selectAll,function(i,n){
                         jsonObj["ids["+i+"]"] = n.id;
                     });
-                    console.log(jsonObj);
                     $.messager.confirm("消息提醒", "将删除班级信息（如果班级下存在学生或教师则不能删除），确认继续？", function(r){
                         if(r){
                             $.ajax({

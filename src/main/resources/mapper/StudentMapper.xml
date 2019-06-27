@@ -39,15 +39,15 @@
 <!--        insert into s_clazz(name,info) values(#{name},#{info})-->
 <!--    </insert>-->
 
-<!--    <delete id="deleteClazz" parameterType="java.util.ArrayList">-->
-<!--        delete from s_clazz-->
-<!--        <where>-->
-<!--            id in-->
-<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
-<!--                #{id}-->
-<!--            </foreach>-->
-<!--        </where>-->
-<!--    </delete>-->
+    <delete id="deleteStudent" parameterType="java.util.ArrayList">
+        delete from s_student
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
 
 <!--    <update id="editClazz" parameterType="Clazz">-->
 <!--        update s_clazz set name = #{name},info = #{info} where id = #{id}-->

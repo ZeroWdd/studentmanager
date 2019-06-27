@@ -35,4 +35,9 @@ public class StudentServiceImpl implements StudentService {
         pageBean.setTotalsize(totalsize);
         return pageBean;
     }
+
+    @Override
+    public int deleteStudent(List<Integer> ids) {
+        return studenetMapper.deleteStudent(ids);
+    }
 }
