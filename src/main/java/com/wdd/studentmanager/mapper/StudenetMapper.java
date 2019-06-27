@@ -1,5 +1,10 @@
 package com.wdd.studentmanager.mapper;
 
+import com.wdd.studentmanager.domain.Student;
+
+import java.util.List;
+import java.util.Map;
+
 /**
  * @Classname StudenetMapper
  * @Description None
@@ -7,4 +12,7 @@ package com.wdd.studentmanager.mapper;
  * @Created by WDD
  */
 public interface StudenetMapper {
+    List<Student> queryList(Map<String, Object> paramMap);
+
+    Integer queryCount(Map<String, Object> paramMap);
 }

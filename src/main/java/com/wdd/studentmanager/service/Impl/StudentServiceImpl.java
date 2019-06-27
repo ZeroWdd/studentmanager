@@ -1,0 +1,38 @@
+package com.wdd.studentmanager.service.Impl;
+
+import com.wdd.studentmanager.domain.Student;
+import com.wdd.studentmanager.mapper.StudenetMapper;
+import com.wdd.studentmanager.service.StudentService;
+import com.wdd.studentmanager.util.PageBean;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+
+import java.util.List;
+import java.util.Map;
+
+/**
+ * @Classname StudentServiceImpl
+ * @Description None
+ * @Date 2019/6/27 14:12
+ * @Created by WDD
+ */
+@Service
+public class StudentServiceImpl implements StudentService {
+
+    @Autowired
+    private StudenetMapper studenetMapper;
+
+    @Override
+    public PageBean<Student> queryPage(Map<String, Object> paramMap) {
+        PageBean<Student> pageBean = new PageBean<>((Integer) paramMap.get("pageno"),(Integer) paramMap.get("pagesize"));
+
+        Integer startIndex = pageBean.getStartIndex();
+        paramMap.put("startIndex",startIndex);
+        List<Student> datas = studenetMapper.queryList(paramMap);
+        pageBean.setDatas(datas);
+
+        Integer totalsize = studenetMapper.queryCount(paramMap);
+        pageBean.setTotalsize(totalsize);
+        return pageBean;
+    }
+}

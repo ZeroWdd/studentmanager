@@ -20,7 +20,7 @@
 				collapsible:false,//是否可折叠的
 				fit: true,//自动大小
 				method: "post",
-				url:"StudentServlet?method=StudentList&t="+new Date().getTime(),
+				url:[[@{/student/getStudentList}]],
 				idField:'id',
 				singleSelect:false,//是否单选
 				pagination:true,//分页控件
@@ -33,7 +33,7 @@
 					{field:'chk',checkbox: true,width:50},
 					{field:'id',title:'ID',width:50, sortable: true},
 					{field:'sn',title:'学号',width:200, sortable: true},
-					{field:'name',title:'姓名',width:200},
+					{field:'username',title:'姓名',width:200},
 					{field:'sex',title:'性别',width:100},
 					{field:'mobile',title:'电话',width:150},
 					{field:'qq',title:'QQ',width:150},
@@ -172,7 +172,7 @@
 
 
 			$("#add_clazzList").combobox({
-				url: "ClazzServlet?method=getClazzList&t="+new Date().getTime()+"&from=combox",
+				url: [[@{/clazz/getClazzList(from=combox)}]],
 				onLoadSuccess: function(){
 					//默认选择第一条数据
 					var data = $(this).combobox("getData");;
