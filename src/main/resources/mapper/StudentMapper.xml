@@ -35,9 +35,10 @@
         </where>
     </select>
 
-<!--    <insert id="addClazz" parameterType="Clazz">-->
-<!--        insert into s_clazz(name,info) values(#{name},#{info})-->
-<!--    </insert>-->
+    <insert id="addStudent" parameterType="Student">
+        insert into s_student(sn,username,password,clazz_id,sex,mobile,qq,photo)
+        values(#{sn},#{username},#{password},#{clazzId},#{sex},#{mobile},#{qq},#{photo})
+    </insert>
 
     <delete id="deleteStudent" parameterType="java.util.ArrayList">
         delete from s_student

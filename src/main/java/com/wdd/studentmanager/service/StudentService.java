@@ -16,4 +16,6 @@ public interface StudentService {
     PageBean<Student> queryPage(Map<String, Object> paramMap);
 
     int deleteStudent(List<Integer> ids);
+
+    int addStudent(Student student);
 }

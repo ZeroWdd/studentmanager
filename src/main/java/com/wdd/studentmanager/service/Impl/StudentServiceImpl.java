@@ -40,4 +40,9 @@ public class StudentServiceImpl implements StudentService {
     public int deleteStudent(List<Integer> ids) {
         return studenetMapper.deleteStudent(ids);
     }
+
+    @Override
+    public int addStudent(Student student) {
+        return studenetMapper.addStudent(student);
+    }
 }

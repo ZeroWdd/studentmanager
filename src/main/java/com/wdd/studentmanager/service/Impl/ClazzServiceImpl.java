@@ -52,4 +52,9 @@ public class ClazzServiceImpl implements ClazzService {
     public int editClazz(Clazz clazz) {
         return clazzMapper.editClazz(clazz);
     }
+
+    @Override
+    public Clazz findByName(String clazzName) {
+        return clazzMapper.findByName(clazzName);
+    }
 }

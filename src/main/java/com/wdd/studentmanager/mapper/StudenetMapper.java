@@ -17,4 +17,6 @@ public interface StudenetMapper {
     Integer queryCount(Map<String, Object> paramMap);
 
     int deleteStudent(List<Integer> ids);
+
+    int addStudent(Student student);
 }

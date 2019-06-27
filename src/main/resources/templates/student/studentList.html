@@ -220,9 +220,9 @@
 									cache: false,
 									contentType: false,
 									processData: false,
-									success: function(msg){
-										if(msg == "success"){
-											$.messager.alert("消息提醒","添加成功!","info");
+									success: function(data){
+										if(data.success){
+											$.messager.alert("消息提醒",data.message,"info");
 											//关闭窗口
 											$("#addDialog").dialog("close");
 											//清空原表格数据
@@ -240,7 +240,7 @@
 											}, 100);
 
 										} else{
-											$.messager.alert("消息提醒","添加失败!","warning");
+											$.messager.alert("消息提醒",data.message,"warning");
 											return;
 										}
 									}
@@ -468,7 +468,7 @@
 			</tr>
 			<tr>
 				<td>班级:</td>
-				<td><input id="add_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzid" /></td>
+				<td><input id="add_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzId" /></td>
 			</tr>
 			<tr>
 				<td>相片:</td>

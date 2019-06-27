@@ -4,8 +4,13 @@ spring:
     url: jdbc:mysql://127.0.0.1:3306/studentmanager?setUnicode=true&characterEncoding=utf8
     username: root
     password: 123
+  servlet:
+    multipart:
+      max-file-size: 30Mb
+      max-request-size: 30Mb
 
 
 mybatis:
   type-aliases-package: com.wdd.studentmanager.domain
   mapper-locations: classpath:mapper/*.xml
+

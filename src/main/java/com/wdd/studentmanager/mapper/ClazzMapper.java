@@ -21,4 +21,6 @@ public interface ClazzMapper {
     int deleteClazz(List<Integer> ids);
 
     int editClazz(Clazz clazz);
+
+    Clazz findByName(String clazzName);
 }

@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.Student;
+import com.wdd.studentmanager.service.ClazzService;
 import com.wdd.studentmanager.service.StudentService;
 import com.wdd.studentmanager.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,8 @@ public class StudentController {
 
     @Autowired
     private StudentService studentService;
+    @Autowired
+    private ClazzService clazzService;
 
     /**
      * 跳转学生列表页面
@@ -95,58 +98,22 @@ public class StudentController {
 
     @RequestMapping("/addStudent")
     @ResponseBody
-    public AjaxResult addStudent(@RequestParam("file") MultipartFile[] files,Student student,
-                                 HttpSession session) throws IOException {
+    public AjaxResult addStudent(@RequestParam("file") MultipartFile[] files,Student student) throws IOException {
 
         AjaxResult ajaxResult = new AjaxResult();
-        //创建时间
-//        Date currentTime = new Date();
-//        SimpleDateFormat formatter = new SimpleDateFormat("yyyy-MM-dd");
-//        String dateString = formatter.format(currentTime);
-//        project.setCreatedate(dateString);
-//        project.setMemberid(member.getId());
-//        //保存项目
-//        projectService.insert(project);
-//        Integer id = project.getId();//返回主键
-//
-//
-//        memberProjectFollow.setMemberid(member.getId());
-//        memberProjectFollow.setProjectid(id);
-//        //保存MemberProjectFollow
-//        memberProjectFollowService.insert(memberProjectFollow);
-//
-//        //保存projectType
-//        ProjectType projectType = new ProjectType();
-//        projectType.setProjectid(id);
-//        projectType.setTypeid(Integer.parseInt(type));
-//        projecttypeService.insert(projectType);
-//
-//        //保存projectTag
-//        ProjectTag projectTag = new ProjectTag();
-//        projectTag.setProjectid(id);
-//        projectTag.setTagid(Integer.parseInt(tag));
-//        projectTagService.insert(projectTag);
-//
-        //保存图片
-        //String realPath = session.getServletContext().getRealPath("/pics");
-        //System.out.println(realPath);
+        student.setSn(SnGenerateUtil.generateSn(student.getClazzId()));
 
         // 存放上传图片的文件夹
         File fileDir = UploadUtil.getImgDirFile();
         for(MultipartFile fileImg : files){
 
             // 拿到文件名
-            String filename = fileImg.getOriginalFilename();
             String extName = fileImg.getOriginalFilename().substring(fileImg.getOriginalFilename().lastIndexOf("."));
             String uuidName = UUID.randomUUID().toString();
-
-            // 输出文件夹绝对路径  -- 这里的绝对路径是相当于当前项目的路径而不是“容器”路径
-            System.out.println(fileDir.getAbsolutePath());
 
             try {
                 // 构建真实的文件路径
                 File newFile = new File(fileDir.getAbsolutePath() + File.separator +uuidName+ extName);
-                System.out.println(newFile.getAbsolutePath());
 
                 // 上传图片到 -》 “绝对路径”
                 fileImg.transferTo(newFile);
@@ -154,7 +121,24 @@ public class StudentController {
             } catch (IOException e) {
                 e.printStackTrace();
             }
+            student.setPhoto(uuidName+extName);
         }
+        //保存学生信息到数据库
+        try{
+            int count = studentService.addStudent(student);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("保存成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("保存失败");
+            }
+        }catch (Exception e){
+            e.printStackTrace();
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("保存失败");
+        }
+
         ajaxResult.setSuccess(true);
         return ajaxResult;
     }
