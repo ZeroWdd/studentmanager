@@ -18,4 +18,8 @@ public interface StudentService {
     int deleteStudent(List<Integer> ids);
 
     int addStudent(Student student);
+
+    Student findById(Integer sid);
+
+    int editStudent(Student student);
 }

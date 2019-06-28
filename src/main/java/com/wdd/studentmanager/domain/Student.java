@@ -1,8 +1,5 @@
 package com.wdd.studentmanager.domain;
 
-import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-
-@JsonIgnoreProperties(value = {"hibernateLazyInitializer", "handler"})
 public class Student {
 	private int id;
 	private String sn;//学号

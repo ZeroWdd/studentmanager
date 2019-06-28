@@ -19,4 +19,8 @@ public interface StudenetMapper {
     int deleteStudent(List<Integer> ids);
 
     int addStudent(Student student);
+
+    Student findById(Integer sid);
+
+    int editStudent(Student student);
 }

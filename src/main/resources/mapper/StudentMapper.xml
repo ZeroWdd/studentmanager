@@ -50,7 +50,14 @@
         </where>
     </delete>
 
-<!--    <update id="editClazz" parameterType="Clazz">-->
-<!--        update s_clazz set name = #{name},info = #{info} where id = #{id}-->
-<!--    </update>-->
+    <update id="editStudent" parameterType="Student">
+        update s_student set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq}
+        where id = #{id}
+    </update>
+
+
+    <select id="findById" parameterType="int" resultType="Student">
+        select * from s_student where id = #{sid}
+    </select>
+
 </mapper>

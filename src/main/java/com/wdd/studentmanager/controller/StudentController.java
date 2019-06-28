@@ -41,7 +41,7 @@ public class StudentController {
         return "/student/studentList";
     }
 
-    @PostMapping("/getStudentList")
+    @RequestMapping("/getStudentList")
     @ResponseBody
     public Object getStudentList(@RequestParam(value = "page", defaultValue = "1")Integer page,
                                  @RequestParam(value = "rows", defaultValue = "100")Integer rows,
@@ -96,6 +96,14 @@ public class StudentController {
         return ajaxResult;
     }
 
+
+    /**
+     * 添加学生
+     * @param files
+     * @param student
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/addStudent")
     @ResponseBody
     public AjaxResult addStudent(@RequestParam("file") MultipartFile[] files,Student student) throws IOException {
@@ -143,4 +151,42 @@ public class StudentController {
         return ajaxResult;
     }
 
+    /**
+     * 获取图片地址
+     * @param sid
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/getPhoto")
+    @ResponseBody
+    public AjaxResult getPhoto(@RequestParam(value = "sid",defaultValue = "0") Integer sid,
+                               @RequestParam(value = "tid",defaultValue = "0")Integer tid){
+        AjaxResult ajaxResult = new AjaxResult();
+        if(sid != 0){
+            Student student = studentService.findById(sid);
+            ajaxResult.setImgurl(student.getPhoto());
+        }
+        return ajaxResult;
+    }
+
+    @PostMapping("/editStudent")
+    @ResponseBody
+    public AjaxResult editStudent(Student student){
+        AjaxResult ajaxResult = new AjaxResult();
+        try{
+            int count = studentService.editStudent(student);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("修改成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("修改失败");
+        }
+        return ajaxResult;
+    }
 }

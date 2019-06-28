@@ -45,4 +45,14 @@ public class StudentServiceImpl implements StudentService {
     public int addStudent(Student student) {
         return studenetMapper.addStudent(student);
     }
+
+    @Override
+    public Student findById(Integer sid) {
+        return studenetMapper.findById(sid);
+    }
+
+    @Override
+    public int editStudent(Student student) {
+        return studenetMapper.editStudent(student);
+    }
 }

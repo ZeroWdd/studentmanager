@@ -179,7 +179,7 @@
 
 
 			$("#edit_clazzList").combobox({
-				url: "ClazzServlet?method=getClazzList&t="+new Date().getTime()+"&from=combox",
+				url: [[@{/clazz/getClazzList(from=combox)}]],
 				onLoadSuccess: function(){
 					//默认选择第一条数据
 					var data = $(this).combobox("getData");
@@ -291,11 +291,11 @@
 							} else{
 								$.ajax({
 									type: "post",
-									url: "StudentServlet?method=EditStudent&t="+new Date().getTime(),
+									url: [[@{/student/editStudent}]],
 									data: $("#editForm").serialize(),
-									success: function(msg){
-										if(msg == "success"){
-											$.messager.alert("消息提醒","更新成功!","info");
+									success: function(data){
+										if(data.success){
+											$.messager.alert("消息提醒",data.message,"info");
 											//关闭窗口
 											$("#editDialog").dialog("close");
 											//刷新表格
@@ -308,7 +308,7 @@
 											}, 100);
 
 										} else{
-											$.messager.alert("消息提醒","更新失败!","warning");
+											$.messager.alert("消息提醒",data.message,"warning");
 											return;
 										}
 									}
@@ -333,19 +333,28 @@
 				],
 				onBeforeOpen: function(){
 					var selectRow = $("#dataList").datagrid("getSelected");
-					//设置值
-					$("#edit_name").textbox('setValue', selectRow.name);
-					$("#edit_sex").textbox('setValue', selectRow.sex);
-					$("#edit_mobile").textbox('setValue', selectRow.mobile);
-					$("#edit_qq").textbox('setValue', selectRow.qq);
-					$("#edit_photo").attr("src", "PhotoServlet?method=getPhoto&type=2&sid="+selectRow.id);
-					$("#edit-id").val(selectRow.id);
-					$("#set-photo-id").val(selectRow.id);
-					var clazzid = selectRow.clazzId;
-					setTimeout(function(){
-						$("#edit_clazzList").combobox('setValue', clazzid);
-					}, 100);
 
+					$.ajax({
+						type: "post",
+						url: [[@{/student/getPhoto}]]+"?sid="+selectRow.id,
+						success: function(data){
+							var i = [[@{/upload/imgs/}]];
+							var imgUrl = data.imgurl;
+							var img = i + imgUrl;
+							//设置值
+							$("#edit_name").textbox('setValue', selectRow.username);
+							$("#edit_sex").textbox('setValue', selectRow.sex);
+							$("#edit_mobile").textbox('setValue', selectRow.mobile);
+							$("#edit_qq").textbox('setValue', selectRow.qq);
+							$("#edit_photo").attr("src", img);
+							$("#edit-id").val(selectRow.id);
+							$("#set-photo-id").val(selectRow.id);
+							var clazzid = selectRow.clazzId;
+							setTimeout(function(){
+								$("#edit_clazzList").combobox('setValue', clazzid);
+							}, 100);
+						}
+					});
 				}
 			});
 			//搜索按钮监听事件
@@ -360,21 +369,21 @@
 		$("#upload-photo-btn").click(function(){
 
 		});
-		function uploadPhoto(){
-			var action = $("#uploadForm").attr('action');
-			var pos = action.indexOf('sid');
-			if(pos != -1){
-				action = action.substring(0,pos-1);
-			}
-			$("#uploadForm").attr('action',action+'&sid='+$("#set-photo-id").val());
-			$("#uploadForm").submit();
-			setTimeout(function(){
-				var message =  $(window.frames["photo_target"].document).find("#message").text();
-				$.messager.alert("消息提醒",message,"info");
-
-				$("#edit_photo").attr("src", "PhotoServlet?method=getPhoto&sid="+$("#set-photo-id").val());
-			}, 1500)
-		}
+		// function uploadPhoto(){
+		// 	var action = $("#uploadForm").attr('action');
+		// 	var pos = action.indexOf('sid');
+		// 	if(pos != -1){
+		// 		action = action.substring(0,pos-1);
+		// 	}
+		// 	$("#uploadForm").attr('action',action+'&sid='+$("#set-photo-id").val());
+		// 	$("#uploadForm").submit();
+		// 	setTimeout(function(){
+		// 		var message =  $(window.frames["photo_target"].document).find("#message").text();
+		// 		$.messager.alert("消息提醒",message,"info");
+		//
+		// 		$("#edit_photo").attr("src", "PhotoServlet?method=getPhoto&sid="+$("#set-photo-id").val());
+		// 	}, 1500)
+		// }
 
 		/*图片预览*/
 		var filechange=function(event){
@@ -481,21 +490,21 @@
 
 <!-- 修改学生窗口 -->
 <div id="editDialog" style="padding: 10px">
-	<div style="float: right; margin: 20px 20px 0 0; width: 200px; border: 1px solid #EBF3FF">
-		<img id="edit_photo" alt="照片" style="max-width: 200px; max-height: 400px;" title="照片" src="" />
-		<form id="uploadForm" method="post" enctype="multipart/form-data" action="PhotoServlet?method=SetPhoto" target="photo_target">
-			<!-- StudentServlet?method=SetPhoto -->
-			<input type="hidden" name="sid" id="set-photo-id">
-			<input class="easyui-filebox" name="photo" data-options="prompt:'选择照片'" style="width:200px;">
-			<input id="upload-photo-btn" onClick="uploadPhoto()" class="easyui-linkbutton" style="width: 50px; height: 24px;" type="button" value="上传"/>
-		</form>
-	</div>
+<!--	<div style="float: right; margin: 20px 20px 0 0; width: 200px; border: 1px solid #EBF3FF">-->
+<!--		<img id="edit_photo" alt="照片" style="max-width: 200px; max-height: 400px;" title="照片" src="" />-->
+<!--		<form id="uploadForm" method="post" enctype="multipart/form-data" action="PhotoServlet?method=SetPhoto" target="photo_target">-->
+<!--			&lt;!&ndash; StudentServlet?method=SetPhoto &ndash;&gt;-->
+<!--			<input type="hidden" name="sid" id="set-photo-id">-->
+<!--			<input class="easyui-filebox" name="photo" data-options="prompt:'选择照片'" style="width:200px;">-->
+<!--			<input id="upload-photo-btn" onClick="uploadPhoto()" class="easyui-linkbutton" style="width: 50px; height: 24px;" type="button" value="上传"/>-->
+<!--		</form>-->
+<!--	</div>-->
 	<form id="editForm" method="post">
 		<input type="hidden" name="id" id="edit-id">
 		<table cellpadding="8" >
 			<tr>
 				<td>姓名:</td>
-				<td><input id="edit_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="name" data-options="required:true, missingMessage:'请填写姓名'" /></td>
+				<td><input id="edit_name" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="username" data-options="required:true, missingMessage:'请填写姓名'" /></td>
 			</tr>
 			<tr>
 				<td>性别:</td>
@@ -511,7 +520,7 @@
 			</tr>
 			<tr>
 				<td>班级:</td>
-				<td><input id="edit_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzid" /></td>
+				<td><input id="edit_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzId" /></td>
 			</tr>
 		</table>
 	</form>
