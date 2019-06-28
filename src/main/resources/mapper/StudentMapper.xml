@@ -51,7 +51,7 @@
     </delete>
 
     <update id="editStudent" parameterType="Student">
-        update s_student set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq}
+        update s_student set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq},photo=#{photo}
         where id = #{id}
     </update>
 

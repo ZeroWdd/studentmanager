@@ -289,10 +289,15 @@
 								$.messager.alert("消息提醒","请检查你输入的数据!","warning");
 								return;
 							} else{
+								var formData = new FormData($( "#editForm" )[0]);
 								$.ajax({
 									type: "post",
 									url: [[@{/student/editStudent}]],
-									data: $("#editForm").serialize(),
+									data: formData,
+									async: false,
+									cache: false,
+									contentType: false,
+									processData: false,
 									success: function(data){
 										if(data.success){
 											$.messager.alert("消息提醒",data.message,"info");
@@ -322,6 +327,7 @@
 						iconCls:'icon-reload',
 						handler:function(){
 							//清空表单
+							$("#imgd div").remove();
 							$("#edit_name").textbox('setValue', "");
 							$("#edit_sex").textbox('setValue', "男");
 							$("#edit_phone").textbox('setValue', "");
@@ -333,7 +339,7 @@
 				],
 				onBeforeOpen: function(){
 					var selectRow = $("#dataList").datagrid("getSelected");
-
+					$("#imgd div").remove();
 					$.ajax({
 						type: "post",
 						url: [[@{/student/getPhoto}]]+"?sid="+selectRow.id,
@@ -346,7 +352,19 @@
 							$("#edit_sex").textbox('setValue', selectRow.sex);
 							$("#edit_mobile").textbox('setValue', selectRow.mobile);
 							$("#edit_qq").textbox('setValue', selectRow.qq);
-							$("#edit_photo").attr("src", img);
+
+							var div = document.createElement("div"),
+									img1 = document.createElement("img");
+							//div.className = "pic";
+							img1.src=img;
+							$(img1).css("width","200px");
+							$(img1).css("hight","200px");
+							div.appendChild(img1);
+							$("#imgd").append(div);
+
+							//$("#edit_photo").attr("src", img);
+							// $(".imgDiv").
+
 							$("#edit-id").val(selectRow.id);
 							$("#set-photo-id").val(selectRow.id);
 							var clazzid = selectRow.clazzId;
@@ -404,6 +422,30 @@
 					$(img).css("hight","200px");
 					div.appendChild(img);
 					$("#imgDiv").append(div);
+				};
+				console.log(img)
+				fr.readAsDataURL(value);
+			})
+		};
+
+		var filechange1=function(event){
+			$("#imgd div").remove();
+
+			var inp = event.path[0];
+			var files = event.target.files;
+			$.each(files,function(key,value){
+				//每次都只会遍历一个图片数据
+				var div = document.createElement("div"),
+						img = document.createElement("img");
+				div.className = "pic";
+
+				var fr = new FileReader();
+				fr.onload = function(){
+					img.src=this.result;
+					$(img).css("width","200px");
+					$(img).css("hight","200px");
+					div.appendChild(img);
+					$("#imgd").append(div);
 				};
 				console.log(img)
 				fr.readAsDataURL(value);
@@ -499,7 +541,7 @@
 <!--			<input id="upload-photo-btn" onClick="uploadPhoto()" class="easyui-linkbutton" style="width: 50px; height: 24px;" type="button" value="上传"/>-->
 <!--		</form>-->
 <!--	</div>-->
-	<form id="editForm" method="post">
+	<form id="editForm" method="post" enctype="multipart/form-data">
 		<input type="hidden" name="id" id="edit-id">
 		<table cellpadding="8" >
 			<tr>
@@ -521,6 +563,11 @@
 			<tr>
 				<td>班级:</td>
 				<td><input id="edit_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzId" /></td>
+			</tr>
+			<tr>
+				<td>相片:</td>
+				<td><input onchange="filechange1(event)" type="file" name="file" multiple></td>
+				<td><div id="imgd"></div></td>
 			</tr>
 		</table>
 	</form>

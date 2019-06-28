@@ -171,8 +171,32 @@ public class StudentController {
 
     @PostMapping("/editStudent")
     @ResponseBody
-    public AjaxResult editStudent(Student student){
+    public AjaxResult editStudent(@RequestParam("file") MultipartFile[] files,Student student){
         AjaxResult ajaxResult = new AjaxResult();
+
+        // 存放上传图片的文件夹
+        File fileDir = UploadUtil.getImgDirFile();
+        for(MultipartFile fileImg : files){
+
+            // 拿到文件名
+            String extName = fileImg.getOriginalFilename().substring(fileImg.getOriginalFilename().lastIndexOf("."));
+            String uuidName = UUID.randomUUID().toString();
+
+            try {
+                // 构建真实的文件路径
+                File newFile = new File(fileDir.getAbsolutePath() + File.separator +uuidName+ extName);
+                // 上传图片到 -》 “绝对路径”
+                fileImg.transferTo(newFile);
+
+                Student byId = studentService.findById(student.getId());
+                new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto()).delete();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            student.setPhoto(uuidName+extName);
+        }
+
         try{
             int count = studentService.editStudent(student);
             if(count > 0){
