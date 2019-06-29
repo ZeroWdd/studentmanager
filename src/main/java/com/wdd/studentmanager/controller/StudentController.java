@@ -41,6 +41,16 @@ public class StudentController {
         return "/student/studentList";
     }
 
+    /**
+     * 异步加载学生列表
+     * @param page
+     * @param rows
+     * @param studentName
+     * @param clazzid
+     * @param from
+     * @param session
+     * @return
+     */
     @RequestMapping("/getStudentList")
     @ResponseBody
     public Object getStudentList(@RequestParam(value = "page", defaultValue = "1")Integer page,

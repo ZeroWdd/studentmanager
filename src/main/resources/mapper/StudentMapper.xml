@@ -60,4 +60,8 @@
         select * from s_student where id = #{sid}
     </select>
 
+    <select id="findByStudent" parameterType="Student" resultType="Student">
+        select * from s_student where username = #{username} and password = #{password}
+    </select>
+
 </mapper>

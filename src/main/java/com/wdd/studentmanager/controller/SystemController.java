@@ -99,6 +99,36 @@ public class SystemController {
                 session.setAttribute(Const.USERTYPE,"1");
                 break;
             }
+            case "2":{
+                Student student = new Student();
+                student.setPassword(password);
+                student.setUsername(username);
+                Student st = studentService.findByStudent(student);
+                if(StringUtils.isEmpty(st)){
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("用户名或密码错误");
+                    return ajaxResult;
+                }
+                ajaxResult.setSuccess(true);
+                session.setAttribute(Const.STUDENT,st);
+                session.setAttribute(Const.USERTYPE,"2");
+                break;
+            }
+            case "3":{
+                Teacher teacher = new Teacher();
+                teacher.setPassword(password);
+                teacher.setUsername(username);
+                Teacher tr = teacherService.findByTeacher(teacher);
+                if(StringUtils.isEmpty(tr)){
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("用户名或密码错误");
+                    return ajaxResult;
+                }
+                ajaxResult.setSuccess(true);
+                session.setAttribute(Const.TEACHER,tr);
+                session.setAttribute(Const.USERTYPE,"3");
+                break;
+            }
         }
         return ajaxResult;
     }
@@ -137,6 +167,11 @@ public class SystemController {
     }
 
 
+    /**
+     * 登出
+     * @param session
+     * @return
+     */
     @GetMapping("/logout")
     public String logout(HttpSession session){
         session.invalidate();
@@ -176,6 +211,13 @@ public class SystemController {
     }
 
 
+    /**
+     * 修改密码
+     * @param password
+     * @param newpassword
+     * @param session
+     * @return
+     */
     @PostMapping("/editPassword")
     @ResponseBody
     public AjaxResult editPassword(String password,String newpassword,HttpSession session){

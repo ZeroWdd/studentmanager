@@ -22,4 +22,6 @@ public interface StudentService {
     Student findById(Integer sid);
 
     int editStudent(Student student);
+
+    Student findByStudent(Student student);
 }

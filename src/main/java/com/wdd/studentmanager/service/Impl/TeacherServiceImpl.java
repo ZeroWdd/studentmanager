@@ -55,4 +55,9 @@ public class TeacherServiceImpl implements TeacherService {
     public int editTeacher(Teacher teacher) {
         return teacherMapper.editTeacher(teacher);
     }
+
+    @Override
+    public Teacher findByTeacher(Teacher teacher) {
+        return teacherMapper.findByTeacher(teacher);
+    }
 }

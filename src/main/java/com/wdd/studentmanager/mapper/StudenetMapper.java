@@ -23,4 +23,6 @@ public interface StudenetMapper {
     Student findById(Integer sid);
 
     int editStudent(Student student);
+
+    Student findByStudent(Student student);
 }

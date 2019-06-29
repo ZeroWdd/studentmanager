@@ -60,4 +60,9 @@
         select * from s_teacher where id = #{tid}
     </select>
 
+
+    <select id="findByTeacher" parameterType="Teacher" resultType="Teacher">
+        select * from s_teacher where username = #{username} and password = #{password}
+    </select>
+
 </mapper>

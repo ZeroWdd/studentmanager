@@ -23,4 +23,6 @@ public interface TeacherMapper {
     Teacher findById(Integer tid);
 
     int editTeacher(Teacher teacher);
+
+    Teacher findByTeacher(Teacher teacher);
 }

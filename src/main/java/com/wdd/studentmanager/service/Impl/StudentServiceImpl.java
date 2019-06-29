@@ -55,4 +55,9 @@ public class StudentServiceImpl implements StudentService {
     public int editStudent(Student student) {
         return studenetMapper.editStudent(student);
     }
+
+    @Override
+    public Student findByStudent(Student student) {
+        return studenetMapper.findByStudent(student);
+    }
 }
