@@ -96,6 +96,7 @@ public class SystemController {
                 }
                 ajaxResult.setSuccess(true);
                 session.setAttribute(Const.ADMIN,ad);
+                session.setAttribute(Const.USERTYPE,"1");
                 break;
             }
         }
@@ -168,5 +169,44 @@ public class SystemController {
         return ajaxResult;
     }
 
+
+    @GetMapping("/personalView")
+    public String personalView(){
+        return "/system/personalView";
+    }
+
+
+    @PostMapping("/editPassword")
+    @ResponseBody
+    public AjaxResult editPassword(String password,String newpassword,HttpSession session){
+        AjaxResult ajaxResult = new AjaxResult();
+        String usertype = (String) session.getAttribute(Const.USERTYPE);
+        if (usertype.equals("1")){
+            //管理员
+            Admin admin = (Admin)session.getAttribute(Const.ADMIN);
+            if(!password.equals(admin.getPassword())){
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("原密码错误");
+                return ajaxResult;
+            }
+            admin.setPassword(newpassword);
+            try{
+                int count = adminService.editPswdByAdmin(admin);
+                if(count > 0){
+                    ajaxResult.setSuccess(true);
+                    ajaxResult.setMessage("修改成功,请重新登录");
+                    //session.invalidate();
+                }else{
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("修改失败");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }
+        return ajaxResult;
+    }
 
 }

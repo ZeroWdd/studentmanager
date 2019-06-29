@@ -12,4 +12,6 @@ public interface AdminService {
 
     Admin findByAdmin(Admin admin);
 
+
+    int editPswdByAdmin(Admin admin);
 }

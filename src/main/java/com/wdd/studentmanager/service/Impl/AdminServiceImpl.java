@@ -22,4 +22,10 @@ public class AdminServiceImpl implements AdminService {
     public Admin findByAdmin(Admin admin) {
         return adminMapper.findByAdmin(admin);
     }
+
+    @Override
+    public int editPswdByAdmin(Admin admin) {
+        return adminMapper.editPswdByAdmin(admin);
+    }
+
 }

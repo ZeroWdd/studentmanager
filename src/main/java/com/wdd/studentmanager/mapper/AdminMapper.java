@@ -13,4 +13,7 @@ import org.springframework.stereotype.Repository;
 public interface AdminMapper {
 
     Admin findByAdmin(Admin admin);
+
+
+    int editPswdByAdmin(Admin admin);
 }
