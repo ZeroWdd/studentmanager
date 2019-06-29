@@ -1,7 +1,11 @@
 package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.Admin;
+import com.wdd.studentmanager.domain.Student;
+import com.wdd.studentmanager.domain.Teacher;
 import com.wdd.studentmanager.service.AdminService;
+import com.wdd.studentmanager.service.StudentService;
+import com.wdd.studentmanager.service.TeacherService;
 import com.wdd.studentmanager.util.AjaxResult;
 import com.wdd.studentmanager.util.Const;
 import com.wdd.studentmanager.util.CpachaUtil;
@@ -29,6 +33,10 @@ public class SystemController {
 
     @Autowired
     private AdminService adminService;
+    @Autowired
+    private StudentService studentService;
+    @Autowired
+    private TeacherService teacherService;
 
     /**
      * 跳转登录界面
@@ -132,6 +140,32 @@ public class SystemController {
     public String logout(HttpSession session){
         session.invalidate();
         return "/login";
+    }
+
+
+    /**
+     * 获取图片地址
+     * @param sid
+     * @param tid
+     * @return
+     */
+    @RequestMapping("/getPhoto")
+    @ResponseBody
+    public AjaxResult getPhoto(@RequestParam(value = "sid",defaultValue = "0") Integer sid,
+                               @RequestParam(value = "tid",defaultValue = "0")Integer tid){
+        AjaxResult ajaxResult = new AjaxResult();
+        if(sid != 0){
+            Student student = studentService.findById(sid);
+            ajaxResult.setImgurl(student.getPhoto());
+            return ajaxResult;
+        }
+        if(tid!=0){
+            Teacher teacher = teacherService.findById(tid);
+            ajaxResult.setImgurl(teacher.getPhoto());
+            return ajaxResult;
+        }
+
+        return ajaxResult;
     }
 
 

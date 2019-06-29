@@ -342,7 +342,7 @@
 					$("#imgd div").remove();
 					$.ajax({
 						type: "post",
-						url: [[@{/student/getPhoto}]]+"?sid="+selectRow.id,
+						url: [[@{/system/getPhoto}]]+"?sid="+selectRow.id,
 						success: function(data){
 							var i = [[@{/upload/imgs/}]];
 							var imgUrl = data.imgurl;

@@ -18,4 +18,8 @@ public interface TeacherService {
     int deleteTeacher(List<Integer> ids);
 
     int addTeacher(Teacher teacher);
+
+    Teacher findById(Integer tid);
+
+    int editTeacher(Teacher teacher);
 }

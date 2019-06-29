@@ -152,23 +152,11 @@ public class StudentController {
     }
 
     /**
-     * 获取图片地址
-     * @param sid
-     * @param tid
+     * 修改学生信息
+     * @param files
+     * @param student
      * @return
      */
-    @RequestMapping("/getPhoto")
-    @ResponseBody
-    public AjaxResult getPhoto(@RequestParam(value = "sid",defaultValue = "0") Integer sid,
-                               @RequestParam(value = "tid",defaultValue = "0")Integer tid){
-        AjaxResult ajaxResult = new AjaxResult();
-        if(sid != 0){
-            Student student = studentService.findById(sid);
-            ajaxResult.setImgurl(student.getPhoto());
-        }
-        return ajaxResult;
-    }
-
     @PostMapping("/editStudent")
     @ResponseBody
     public AjaxResult editStudent(@RequestParam("file") MultipartFile[] files,Student student){

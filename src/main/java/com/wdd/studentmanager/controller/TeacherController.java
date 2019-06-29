@@ -82,7 +82,7 @@ public class TeacherController {
      * @param data
      * @return
      */
-    @PostMapping("/deleteTacher")
+    @PostMapping("/deleteTeacher")
     @ResponseBody
     public AjaxResult deleteTeacher(Data data){
         AjaxResult ajaxResult = new AjaxResult();
@@ -103,6 +103,13 @@ public class TeacherController {
         return ajaxResult;
     }
 
+    /**
+     * 添加教师
+     * @param files
+     * @param teacher
+     * @return
+     * @throws IOException
+     */
     @RequestMapping("/addTeacher")
     @ResponseBody
     public AjaxResult addTeacher(@RequestParam("file") MultipartFile[] files, Teacher teacher) throws IOException {
@@ -147,6 +154,51 @@ public class TeacherController {
         }
 
         ajaxResult.setSuccess(true);
+        return ajaxResult;
+    }
+
+    @PostMapping("/editTeacher")
+    @ResponseBody
+    public AjaxResult editTeacher(@RequestParam("file") MultipartFile[] files,Teacher teacher){
+        AjaxResult ajaxResult = new AjaxResult();
+
+        // 存放上传图片的文件夹
+        File fileDir = UploadUtil.getImgDirFile();
+        for(MultipartFile fileImg : files){
+
+            // 拿到文件名
+            String extName = fileImg.getOriginalFilename().substring(fileImg.getOriginalFilename().lastIndexOf("."));
+            String uuidName = UUID.randomUUID().toString();
+
+            try {
+                // 构建真实的文件路径
+                File newFile = new File(fileDir.getAbsolutePath() + File.separator +uuidName+ extName);
+                // 上传图片到 -》 “绝对路径”
+                fileImg.transferTo(newFile);
+
+                Teacher byId = teacherService.findById(teacher.getId());
+                new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto()).delete();
+
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
+            teacher.setPhoto(uuidName+extName);
+        }
+
+        try{
+            int count = teacherService.editTeacher(teacher);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("修改成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }catch(Exception e){
+            e.printStackTrace();
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("修改失败");
+        }
         return ajaxResult;
     }
 }

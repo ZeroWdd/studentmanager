@@ -40,7 +40,7 @@
         values(#{sn},#{username},#{password},#{clazzId},#{sex},#{mobile},#{qq},#{photo})
     </insert>
 
-    <delete id="deleteStudent" parameterType="java.util.ArrayList">
+    <delete id="deleteTeacher" parameterType="java.util.ArrayList">
         delete from s_teacher
         <where>
             id in
@@ -50,14 +50,14 @@
         </where>
     </delete>
 
-<!--    <update id="editStudent" parameterType="Student">-->
-<!--        update s_student set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq},photo=#{photo}-->
-<!--        where id = #{id}-->
-<!--    </update>-->
+    <update id="editTeacher" parameterType="Teacher">
+        update s_teacher set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq},photo=#{photo}
+        where id = #{id}
+    </update>
 
 
-<!--    <select id="findById" parameterType="int" resultType="Student">-->
-<!--        select * from s_student where id = #{sid}-->
-<!--    </select>-->
+    <select id="findById" parameterType="int" resultType="Teacher">
+        select * from s_teacher where id = #{tid}
+    </select>
 
 </mapper>

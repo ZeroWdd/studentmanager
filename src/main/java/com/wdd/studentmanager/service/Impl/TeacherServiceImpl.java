@@ -45,4 +45,14 @@ public class TeacherServiceImpl implements TeacherService {
     public int addTeacher(Teacher teacher) {
         return teacherMapper.addTeacher(teacher);
     }
+
+    @Override
+    public Teacher findById(Integer tid) {
+        return teacherMapper.findById(tid);
+    }
+
+    @Override
+    public int editTeacher(Teacher teacher) {
+        return teacherMapper.editTeacher(teacher);
+    }
 }
