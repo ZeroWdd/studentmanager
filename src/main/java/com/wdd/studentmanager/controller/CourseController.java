@@ -32,12 +32,14 @@ public class CourseController {
     @PostMapping("/getCourseList")
     @ResponseBody
     public Object getClazzList(@RequestParam(value = "page", defaultValue = "1")Integer page,
-                               @RequestParam(value = "rows", defaultValue = "100")Integer rows, String name,String teacherid ,String from){
+                               @RequestParam(value = "rows", defaultValue = "100")Integer rows,
+                               String name,
+                               @RequestParam(value = "teacherid", defaultValue = "0")String teacherid ,String from){
         Map<String,Object> paramMap = new HashMap();
         paramMap.put("pageno",page);
         paramMap.put("pagesize",rows);
         if(!StringUtils.isEmpty(name))  paramMap.put("name",name);
-        if(!StringUtils.isEmpty(teacherid))  paramMap.put("teacherId",teacherid);
+        if(!teacherid.equals("0"))  paramMap.put("teacherId",teacherid);
         PageBean<Course> pageBean = courseService.queryPage(paramMap);
         if(!StringUtils.isEmpty(from) && from.equals("combox")){
             return pageBean.getDatas();
