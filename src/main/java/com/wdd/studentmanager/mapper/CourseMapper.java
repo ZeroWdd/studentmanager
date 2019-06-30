@@ -15,4 +15,10 @@ public interface CourseMapper {
     List<Course> queryList(Map<String, Object> paramMap);
 
     Integer queryCount(Map<String, Object> paramMap);
+
+    int addCourse(Course course);
+
+    int editCourse(Course course);
+
+    int deleteCourse(List<Integer> ids);
 }

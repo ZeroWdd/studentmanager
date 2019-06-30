@@ -35,4 +35,19 @@ public class CourseServiceImpl implements CourseService {
         pageBean.setTotalsize(totalsize);
         return pageBean;
     }
+
+    @Override
+    public int addCourse(Course course) {
+        return courseMapper.addCourse(course);
+    }
+
+    @Override
+    public int editCourse(Course course) {
+        return courseMapper.editCourse(course);
+    }
+
+    @Override
+    public int deleteCourse(List<Integer> ids) {
+        return courseMapper.deleteCourse(ids);
+    }
 }

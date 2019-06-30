@@ -31,23 +31,24 @@
         </where>
     </select>
 
-<!--    <insert id="addClazz" parameterType="Clazz">-->
-<!--        insert into s_clazz(name,info) values(#{name},#{info})-->
-<!--    </insert>-->
+    <insert id="addCourse" parameterType="Course">
+        insert into s_course(name,teacher_id,course_date,max_num,info)
+        values(#{name},#{teacherId},#{courseDate},#{maxNum},#{info})
+    </insert>
 
-<!--    <delete id="deleteClazz" parameterType="java.util.ArrayList">-->
-<!--        delete from s_clazz-->
-<!--        <where>-->
-<!--            id in-->
-<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
-<!--                #{id}-->
-<!--            </foreach>-->
-<!--        </where>-->
-<!--    </delete>-->
+    <delete id="deleteCourse" parameterType="java.util.ArrayList">
+        delete from s_course
+        <where>
+            id in
+            <foreach collection="list" open="(" close=")" separator="," item="id">
+                #{id}
+            </foreach>
+        </where>
+    </delete>
 
-<!--    <update id="editClazz" parameterType="Clazz">-->
-<!--        update s_clazz set name = #{name},info = #{info} where id = #{id}-->
-<!--    </update>-->
+    <update id="editCourse" parameterType="Course">
+        update s_course set name = #{name},teacher_id = #{teacherId},course_date = #{courseDate},max_num = #{maxNum},info = #{info} where id = #{id}
+    </update>
 
 <!--    <select id="findByName" parameterType="String" resultType="Clazz">-->
 <!--        select * from s_clazz where name = #{clazzName}-->

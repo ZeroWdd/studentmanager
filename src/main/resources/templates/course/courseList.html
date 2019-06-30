@@ -129,21 +129,21 @@
                                 $.messager.alert("消息提醒","请检查你输入的数据!","warning");
                                 return;
                             } else{
-                                var teacherid = $("#edit_teacherList").combobox("getValue");
+                                var teacherId = $("#edit_teacherList").combobox("getValue");
                                 var id = $("#dataList").datagrid("getSelected").id;
                                 var name = $("#edit_name").textbox("getText");
                                 var courseDate = $("#edit_course_date").textbox("getText");
                                 var maxNum = $("#edit_max_num").numberbox("getValue");
                                 var info = $("#edit_info").val();
-                                var data = {id:id, teacherid:teacherid, name:name,courseDate:courseDate,info:info,maxnum:maxNum};
+                                var data = {id:id, teacherId:teacherId, name:name,courseDate:courseDate,info:info,maxnum:maxNum};
 
                                 $.ajax({
                                     type: "post",
-                                    url: "CourseServlet?method=EditCourse",
+                                    url: [[@{/course/editCourse}]],
                                     data: data,
-                                    success: function(msg){
-                                        if(msg == "success"){
-                                            $.messager.alert("消息提醒","修改成功!","info");
+                                    success: function(data){
+                                        if(data.success){
+                                            $.messager.alert("消息提醒",data.message,"info");
                                             //关闭窗口
                                             $("#editDialog").dialog("close");
                                             //清空原表格数据
@@ -156,7 +156,7 @@
                                             $('#dataList').datagrid("uncheckAll");
 
                                         } else{
-                                            $.messager.alert("消息提醒","修改失败!","warning");
+                                            $.messager.alert("消息提醒",data.message,"warning");
                                             return;
                                         }
                                     }
@@ -205,23 +205,23 @@
                 if(selectRow == null){
                     $.messager.alert("消息提醒", "请选择数据进行删除!", "warning");
                 } else{
-                    var ids = [];
-                    $(selectRow).each(function(i, row){
-                        ids[i] = row.id;
+                    var jsonObj = {};
+                    $.each(selectRow,function(i,n){
+                        jsonObj["ids["+i+"]"] = n.id;
                     });
                     $.messager.confirm("消息提醒", "将删除与课程相关的所有数据，确认继续？", function(r){
                         if(r){
                             $.ajax({
                                 type: "post",
-                                url: "CourseServlet?method=DeleteCourse",
-                                data: {ids: ids},
-                                success: function(msg){
-                                    if(msg == "success"){
-                                        $.messager.alert("消息提醒","删除成功!","info");
+                                url: [[@{/course/deleteCourse}]],
+                                data: jsonObj,
+                                success: function(data){
+                                    if(data.message){
+                                        $.messager.alert("消息提醒",data.success,"info");
                                         //刷新表格
                                         $("#dataList").datagrid("reload");
                                     } else{
-                                        $.messager.alert("消息提醒","删除失败!","warning");
+                                        $.messager.alert("消息提醒",data.message,"warning");
                                         return;
                                     }
                                 }
@@ -256,11 +256,11 @@
                             } else{
                                 $.ajax({
                                     type: "post",
-                                    url: "CourseServlet?method=AddCourse",
+                                    url: [[@{/course/addCourse}]],
                                     data: $("#addForm").serialize(),
-                                    success: function(msg){
-                                        if(msg == "success"){
-                                            $.messager.alert("消息提醒","添加成功!","info");
+                                    success: function(data){
+                                        if(data.success){
+                                            $.messager.alert("消息提醒",data.message,"info");
                                             //关闭窗口
                                             $("#addDialog").dialog("close");
                                             //清空原表格数据
@@ -268,7 +268,7 @@
                                             //刷新
                                             $('#dataList').datagrid("reload");
                                         } else{
-                                            $.messager.alert("消息提醒","添加失败!","warning");
+                                            $.messager.alert("消息提醒",data.message,"warning");
                                             return;
                                         }
                                     }
@@ -363,11 +363,11 @@
             </tr>
             <tr>
                 <td>上课时间:</td>
-                <td><input id="add_course_date" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="course_date" data-options="required:true, missingMessage:'不能为空'" /></td>
+                <td><input id="add_course_date" style="width: 200px; height: 30px;" class="easyui-textbox" type="text" name="courseDate" data-options="required:true, missingMessage:'不能为空'" /></td>
             </tr>
             <tr>
                 <td>最多可选人数:</td>
-                <td><input id="add_max_num" style="width: 200px; height: 30px;" class="easyui-numberbox" type="text" name="maxnum" data-options="min:0,precision:0,required:true, missingMessage:'不能为空'" /></td>
+                <td><input id="add_max_num" style="width: 200px; height: 30px;" class="easyui-numberbox" type="text" name="maxNum" data-options="min:0,precision:0,required:true, missingMessage:'不能为空'" /></td>
             </tr>
             <tr>
                 <td>课程介绍:</td>
