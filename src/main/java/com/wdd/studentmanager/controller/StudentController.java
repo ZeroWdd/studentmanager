@@ -188,7 +188,10 @@ public class StudentController {
                 fileImg.transferTo(newFile);
 
                 Student byId = studentService.findById(student.getId());
-                new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto()).delete();
+                File file = new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto());
+                if(file != null){
+                    file.delete();
+                }
 
             } catch (IOException e) {
                 e.printStackTrace();

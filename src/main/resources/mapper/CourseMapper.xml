@@ -59,4 +59,11 @@
          )
          where id = #{courseId}
     </update>
+
+    <update id="deleteStudentNum" parameterType="int">
+         update s_course
+         set selected_num = selected_num-1
+         where id = #{courseId}
+    </update>
+
 </mapper>

@@ -16,4 +16,5 @@ public interface SelectedCourseService {
 
     int addSelectedCourse(SelectedCourse selectedCourse);
 
+    int deleteSelectedCourse(Integer id);
 }

@@ -32,23 +32,16 @@
         values(#{studentId},#{courseId})
     </insert>
 
-<!--    <delete id="deleteCourse" parameterType="java.util.ArrayList">-->
-<!--        delete from s_course-->
-<!--        <where>-->
-<!--            id in-->
-<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
-<!--                #{id}-->
-<!--            </foreach>-->
-<!--        </where>-->
-<!--    </delete>-->
+    <delete id="deleteSelectedCourse" parameterType="int">
+        delete from s_selected_course where id = #{id}
+    </delete>
 
-<!--    <update id="editCourse" parameterType="Course">-->
-<!--        update s_course set name = #{name},teacher_id = #{teacherId},course_date = #{courseDate},max_num = #{maxNum},info = #{info} where id = #{id}-->
-<!--    </update>-->
-<!--    -->
+    <select id="findById" parameterType="int" resultMap="SelectedCourseInfo" >
+        select  * from s_selected_course where id = #{id}
+    </select>
 
 
-    <select id="findBySelectedCourse" resultType="SelectedCourse" >
+    <select id="findBySelectedCourse" parameterType="SelectedCourse" resultMap="SelectedCourseInfo" >
         select * from s_selected_course
         where student_id = #{studentId} and course_id = #{courseId}
     </select>

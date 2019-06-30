@@ -19,4 +19,8 @@ public interface SelectedCourseMapper {
     int addSelectedCourse(SelectedCourse selectedCourse);
 
     SelectedCourse findBySelectedCourse(SelectedCourse selectedCourse);
+
+    SelectedCourse findById(Integer id);
+
+    int deleteSelectedCourse(Integer id);
 }

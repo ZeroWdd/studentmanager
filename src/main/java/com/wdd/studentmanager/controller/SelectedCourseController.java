@@ -1,7 +1,6 @@
 package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.SelectedCourse;
-import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
 import com.wdd.studentmanager.util.AjaxResult;
 import com.wdd.studentmanager.util.PageBean;
@@ -25,8 +24,7 @@ public class SelectedCourseController {
 
     @Autowired
     private SelectedCourseService selectedCourseService;
-    @Autowired
-    private CourseService courseService;
+
 
 
     @GetMapping("/selectedCourse_list")
@@ -93,4 +91,32 @@ public class SelectedCourseController {
         }
         return ajaxResult;
     }
+
+
+    /**
+     * 删除选课信息
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteSelectedCourse")
+    @ResponseBody
+    public AjaxResult deleteSelectedCourse(Integer id){
+        AjaxResult ajaxResult = new AjaxResult();
+
+        try {
+            int count = selectedCourseService.deleteSelectedCourse(id);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("移除成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("移除失败");
+            }
+        } catch (Exception e) {
+            e.printStackTrace();
+        }
+        return ajaxResult;
+    }
+
+
 }

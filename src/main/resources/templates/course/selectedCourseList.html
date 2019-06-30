@@ -134,7 +134,7 @@
                         if(r){
                             $.ajax({
                                 type: "post",
-                                url: "SelectedCourseServlet?method=DeleteSelectedCourse",
+                                url: [[@{/selectedCourse/deleteSelectedCourse}]],
                                 data: {id: id},
                                 success: function(msg){
                                     if(msg == "success"){
