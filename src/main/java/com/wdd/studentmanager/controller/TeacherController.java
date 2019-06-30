@@ -88,6 +88,16 @@ public class TeacherController {
     public AjaxResult deleteTeacher(Data data){
         AjaxResult ajaxResult = new AjaxResult();
         try {
+            File fileDir = UploadUtil.getImgDirFile();
+            for(Integer id : data.getIds()){
+                Teacher byId = teacherService.findById(id);
+                if(!byId.getPhoto().isEmpty()){
+                    File file = new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto());
+                    if(file != null){
+                        file.delete();
+                    }
+                }
+            }
             int count = teacherService.deleteTeacher(data.getIds());
             if(count > 0){
                 ajaxResult.setSuccess(true);
@@ -166,6 +176,11 @@ public class TeacherController {
         // 存放上传图片的文件夹
         File fileDir = UploadUtil.getImgDirFile();
         for(MultipartFile fileImg : files){
+
+            String name = fileImg.getOriginalFilename();
+            if(name.equals("")){
+                break;
+            }
 
             // 拿到文件名
             String extName = fileImg.getOriginalFilename().substring(fileImg.getOriginalFilename().lastIndexOf("."));

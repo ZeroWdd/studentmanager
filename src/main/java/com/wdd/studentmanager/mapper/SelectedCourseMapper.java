@@ -23,4 +23,6 @@ public interface SelectedCourseMapper {
     SelectedCourse findById(Integer id);
 
     int deleteSelectedCourse(Integer id);
+
+    List<SelectedCourse> isStudentId(int id);
 }

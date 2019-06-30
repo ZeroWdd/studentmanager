@@ -51,8 +51,29 @@
     </delete>
 
     <update id="editTeacher" parameterType="Teacher">
-        update s_teacher set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq},photo=#{photo}
+        update s_teacher
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="clazzId != null">
+                clazz_id = #{clazzId},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="qq != null">
+                qq = #{qq},
+            </if>
+            <if test="photo != null">
+                photo = #{photo},
+            </if>
+        </set>
         where id = #{id}
+
     </update>
 
 

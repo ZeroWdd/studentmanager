@@ -22,4 +22,5 @@ public interface ClazzService {
     int editClazz(Clazz clazz);
 
     Clazz findByName(String clazzName);
+
 }

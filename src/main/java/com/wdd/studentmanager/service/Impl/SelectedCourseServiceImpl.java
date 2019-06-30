@@ -67,4 +67,14 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
         courseMapper.deleteStudentNum(selectedCourse.getCourseId());
         return selectedCourseMapper.deleteSelectedCourse(id);
     }
+
+    @Override
+    public boolean isStudentId(int id) {
+        List<SelectedCourse> selectedCourseList = selectedCourseMapper.isStudentId(id);
+        if (selectedCourseList.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }

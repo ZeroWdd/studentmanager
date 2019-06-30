@@ -45,4 +45,9 @@
         select * from s_selected_course
         where student_id = #{studentId} and course_id = #{courseId}
     </select>
+
+    <select id="isStudentId" parameterType="int" resultMap="SelectedCourseInfo" >
+        select * from s_selected_course
+        where student_id = #{id}
+    </select>
 </mapper>

@@ -2,6 +2,7 @@ package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.Student;
 import com.wdd.studentmanager.service.ClazzService;
+import com.wdd.studentmanager.service.SelectedCourseService;
 import com.wdd.studentmanager.service.StudentService;
 import com.wdd.studentmanager.util.*;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -13,9 +14,7 @@ import org.springframework.web.multipart.MultipartFile;
 import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.UUID;
+import java.util.*;
 
 /**
  * @Classname StudentController
@@ -31,6 +30,8 @@ public class StudentController {
     private StudentService studentService;
     @Autowired
     private ClazzService clazzService;
+    @Autowired
+    private SelectedCourseService selectedCourseService;
 
     /**
      * 跳转学生列表页面
@@ -91,14 +92,35 @@ public class StudentController {
     public AjaxResult deleteStudent(Data data){
         AjaxResult ajaxResult = new AjaxResult();
         try {
-            int count = studentService.deleteStudent(data.getIds());
+            List<Integer> ids = data.getIds();
+            Iterator<Integer> iterator = ids.iterator();
+            while (iterator.hasNext()){  //判断是否存在课程关联学生
+                if(!selectedCourseService.isStudentId(iterator.next())){
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("无法删除,存在课程关联学生");
+                    return ajaxResult;
+                }
+            }
+            File fileDir = UploadUtil.getImgDirFile();
+            for(Integer id : ids){
+                Student byId = studentService.findById(id);
+                if(!byId.getPhoto().isEmpty()){
+                    File file = new File(fileDir.getAbsolutePath() + File.separator + byId.getPhoto());
+                    if(file != null){
+                        file.delete();
+                    }
+                }
+            }
+            int count = studentService.deleteStudent(ids);
             if(count > 0){
                 ajaxResult.setSuccess(true);
-                ajaxResult.setMessage("删除成功");
+                ajaxResult.setMessage("全部删除成功");
+
             }else{
                 ajaxResult.setSuccess(false);
                 ajaxResult.setMessage("删除失败");
             }
+
         }catch (Exception e){
             e.printStackTrace();
             ajaxResult.setSuccess(false);
@@ -176,6 +198,11 @@ public class StudentController {
         // 存放上传图片的文件夹
         File fileDir = UploadUtil.getImgDirFile();
         for(MultipartFile fileImg : files){
+
+            String name = fileImg.getOriginalFilename();
+            if(name.equals("")){
+                break;
+            }
 
             // 拿到文件名
             String extName = fileImg.getOriginalFilename().substring(fileImg.getOriginalFilename().lastIndexOf("."));

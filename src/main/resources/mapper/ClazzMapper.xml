@@ -46,4 +46,5 @@
     <select id="findByName" parameterType="String" resultType="Clazz">
         select * from s_clazz where name = #{clazzName}
     </select>
+
 </mapper>

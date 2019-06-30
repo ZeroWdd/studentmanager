@@ -283,7 +283,7 @@
 								return;
 							} else{
 								// var clazzid = $("#edit_clazzList").combobox("getValue");
-								// var id = $("#dataList").datagrid("getSelected").id;
+								 var id = $("#dataList").datagrid("getSelected").id;
 								// var name = $("#edit_name").textbox("getText");
 								// var sex = $("#edit_sex").textbox("getText");
 								// var phone = $("#edit_phone").textbox("getText");
@@ -291,6 +291,7 @@
 								// var data = {id:id, clazzid:clazzid, name:name,sex:sex,mobile:phone,qq:qq};
 
 								var formData = new FormData($( "#editForm" )[0]);
+								formData.append("id",id);
 								$.ajax({
 									type: "post",
 									url: [[@{/teacher/editTeacher}]],
@@ -542,7 +543,7 @@
 			<tr>
 				<td style="width:40px">班级:</td>
 				<td colspan="3">
-					<input id="edit_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzid" />
+					<input id="edit_clazzList" style="width: 200px; height: 30px;" class="easyui-textbox" name="clazzId" />
 				</td>
 				<td style="width:80px"></td>
 			</tr>

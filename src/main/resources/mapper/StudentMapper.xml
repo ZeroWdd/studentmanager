@@ -51,7 +51,27 @@
     </delete>
 
     <update id="editStudent" parameterType="Student">
-        update s_student set username = #{username},clazz_id = #{clazzId},sex=#{sex},mobile=#{mobile},qq=#{qq},photo=#{photo}
+        update s_student
+        <set>
+            <if test="username != null">
+                username = #{username},
+            </if>
+            <if test="clazzId != null">
+                clazz_id = #{clazzId},
+            </if>
+            <if test="sex != null">
+                sex = #{sex},
+            </if>
+            <if test="mobile != null">
+                mobile = #{mobile},
+            </if>
+            <if test="qq != null">
+                qq = #{qq},
+            </if>
+            <if test="photo != null">
+                photo = #{photo},
+            </if>
+        </set>
         where id = #{id}
     </update>
 
@@ -62,6 +82,10 @@
 
     <select id="findByStudent" parameterType="Student" resultType="Student">
         select * from s_student where username = #{username} and password = #{password}
+    </select>
+
+    <select id="isStudentByClazzId" parameterType="int" resultMap="StudentInfo">
+        select * from s_student where clazz_id = #{id}
     </select>
 
 </mapper>

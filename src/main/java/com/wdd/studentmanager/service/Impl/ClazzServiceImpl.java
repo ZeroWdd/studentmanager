@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.service.Impl;
 
 import com.wdd.studentmanager.domain.Clazz;
+import com.wdd.studentmanager.domain.Student;
 import com.wdd.studentmanager.mapper.ClazzMapper;
 import com.wdd.studentmanager.service.ClazzService;
 import com.wdd.studentmanager.util.PageBean;
@@ -57,4 +58,5 @@ public class ClazzServiceImpl implements ClazzService {
     public Clazz findByName(String clazzName) {
         return clazzMapper.findByName(clazzName);
     }
+
 }

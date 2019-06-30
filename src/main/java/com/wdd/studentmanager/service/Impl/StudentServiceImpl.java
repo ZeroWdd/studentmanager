@@ -60,4 +60,14 @@ public class StudentServiceImpl implements StudentService {
     public Student findByStudent(Student student) {
         return studenetMapper.findByStudent(student);
     }
+
+    @Override
+    public boolean isStudentByClazzId(Integer id) {
+        List<Student> studentList = studenetMapper.isStudentByClazzId(id);
+        if (studentList.isEmpty()){
+            return true;
+        }else{
+            return false;
+        }
+    }
 }
