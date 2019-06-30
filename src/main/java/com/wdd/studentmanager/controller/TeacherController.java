@@ -52,12 +52,13 @@ public class TeacherController {
     @ResponseBody
     public Object getTeacherList(@RequestParam(value = "page", defaultValue = "1")Integer page,
                                  @RequestParam(value = "rows", defaultValue = "100")Integer rows,
-                                 String teacherName, String clazzid, String from, HttpSession session){
+                                 String teacherName,
+                                 @RequestParam(value = "clazzid", defaultValue = "0")String clazzid, String from, HttpSession session){
         Map<String,Object> paramMap = new HashMap();
         paramMap.put("pageno",page);
         paramMap.put("pagesize",rows);
         if(!StringUtils.isEmpty(teacherName))  paramMap.put("username",teacherName);
-        if(!StringUtils.isEmpty(clazzid))  paramMap.put("clazzid",clazzid);
+        if(!clazzid.equals("0"))  paramMap.put("clazzid",clazzid);
 
         //判断是老师还是学生权限
         Teacher teacher = (Teacher) session.getAttribute(Const.TEACHER);

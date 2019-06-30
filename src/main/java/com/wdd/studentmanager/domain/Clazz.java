@@ -4,15 +4,15 @@ package com.wdd.studentmanager.domain;
  * 班级实体类
  */
 public class Clazz {
-	private int id;
+	private Integer id;
 	private String name;
 	private String info;
 
-	public int getId() {
+	public Integer getId() {
 		return id;
 	}
 
-	public void setId(int id) {
+	public void setId(Integer id) {
 		this.id = id;
 	}
 

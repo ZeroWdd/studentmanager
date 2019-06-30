@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.CourseMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Course" id="CourseInfo">
+        <result column="id" property="id"/>
+        <result column="name" property="name"/>
+        <result column="teacher_id" property="teacherId"/>
+        <result column="course_date" property="courseDate"/>
+        <result column="selected_num" property="selectedNum"/>
+        <result column="max_num" property="maxNum"/>
+        <result column="info" property="info"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="CourseInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_course
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+            <if test="teacherId!=null"> and teacher_id LIKE concat("%",#{teacherId},"%") </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_course
+        <where>
+            <if test="name!=null"> and name LIKE concat("%",#{name},"%") </if>
+            <if test="teacherId!=null"> and teacher_id LIKE concat("%",#{teacherId},"%") </if>
+        </where>
+    </select>
+
+<!--    <insert id="addClazz" parameterType="Clazz">-->
+<!--        insert into s_clazz(name,info) values(#{name},#{info})-->
+<!--    </insert>-->
+
+<!--    <delete id="deleteClazz" parameterType="java.util.ArrayList">-->
+<!--        delete from s_clazz-->
+<!--        <where>-->
+<!--            id in-->
+<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
+<!--                #{id}-->
+<!--            </foreach>-->
+<!--        </where>-->
+<!--    </delete>-->
+
+<!--    <update id="editClazz" parameterType="Clazz">-->
+<!--        update s_clazz set name = #{name},info = #{info} where id = #{id}-->
+<!--    </update>-->
+
+<!--    <select id="findByName" parameterType="String" resultType="Clazz">-->
+<!--        select * from s_clazz where name = #{clazzName}-->
+<!--    </select>-->
+</mapper>

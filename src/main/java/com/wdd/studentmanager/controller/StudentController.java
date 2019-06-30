@@ -55,12 +55,13 @@ public class StudentController {
     @ResponseBody
     public Object getStudentList(@RequestParam(value = "page", defaultValue = "1")Integer page,
                                  @RequestParam(value = "rows", defaultValue = "100")Integer rows,
-                                 String studentName, String clazzid, String from, HttpSession session){
+                                 String studentName,
+                                 @RequestParam(value = "clazzid", defaultValue = "0")String clazzid, String from, HttpSession session){
         Map<String,Object> paramMap = new HashMap();
         paramMap.put("pageno",page);
         paramMap.put("pagesize",rows);
         if(!StringUtils.isEmpty(studentName))  paramMap.put("username",studentName);
-        if(!StringUtils.isEmpty(clazzid))  paramMap.put("clazzid",clazzid);
+        if(!clazzid.equals("0"))  paramMap.put("clazzid",clazzid);
 
         //判断是老师还是学生权限
         Student student = (Student) session.getAttribute(Const.STUDENT);
