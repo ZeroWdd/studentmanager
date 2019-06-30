@@ -237,7 +237,54 @@ public class SystemController {
                 if(count > 0){
                     ajaxResult.setSuccess(true);
                     ajaxResult.setMessage("修改成功,请重新登录");
-                    //session.invalidate();
+                }else{
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("修改失败");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }
+        if(usertype.equals("2")){
+            //学生
+            Student student = (Student)session.getAttribute(Const.STUDENT);
+            if(!password.equals(student.getPassword())){
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("原密码错误");
+                return ajaxResult;
+            }
+            student.setPassword(newpassword);
+            try{
+                int count = studentService.editPswdByStudent(student);
+                if(count > 0){
+                    ajaxResult.setSuccess(true);
+                    ajaxResult.setMessage("修改成功,请重新登录");
+                }else{
+                    ajaxResult.setSuccess(false);
+                    ajaxResult.setMessage("修改失败");
+                }
+            }catch (Exception e){
+                e.printStackTrace();
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("修改失败");
+            }
+        }
+        if(usertype.equals("3")){
+            //教师
+            Teacher teacher = (Teacher) session.getAttribute(Const.TEACHER);
+            if(!password.equals(teacher.getPassword())){
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("原密码错误");
+                return ajaxResult;
+            }
+            teacher.setPassword(newpassword);
+            try{
+                int count = teacherService.editPswdByTeacher(teacher);
+                if(count > 0){
+                    ajaxResult.setSuccess(true);
+                    ajaxResult.setMessage("修改成功,请重新登录");
                 }else{
                     ajaxResult.setSuccess(false);
                     ajaxResult.setMessage("修改失败");

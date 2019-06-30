@@ -26,4 +26,6 @@ public interface StudentService {
     Student findByStudent(Student student);
 
     boolean isStudentByClazzId(Integer next);
+
+    int editPswdByStudent(Student student);
 }

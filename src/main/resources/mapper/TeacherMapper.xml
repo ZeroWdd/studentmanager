@@ -86,4 +86,7 @@
         select * from s_teacher where username = #{username} and password = #{password}
     </select>
 
+    <update id="editPswdByTeacher" parameterType="Teacher">
+        update  s_teacher set password = #{password} where id = #{id}
+    </update>
 </mapper>

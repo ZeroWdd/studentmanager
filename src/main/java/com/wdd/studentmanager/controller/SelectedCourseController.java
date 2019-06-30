@@ -1,14 +1,17 @@
 package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.SelectedCourse;
+import com.wdd.studentmanager.domain.Student;
 import com.wdd.studentmanager.service.SelectedCourseService;
 import com.wdd.studentmanager.util.AjaxResult;
+import com.wdd.studentmanager.util.Const;
 import com.wdd.studentmanager.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
 import org.springframework.web.bind.annotation.*;
 
+import javax.servlet.http.HttpSession;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -46,12 +49,18 @@ public class SelectedCourseController {
     public Object getClazzList(@RequestParam(value = "page", defaultValue = "1")Integer page,
                                @RequestParam(value = "rows", defaultValue = "100")Integer rows,
                                @RequestParam(value = "teacherid", defaultValue = "0")String studentid,
-                               @RequestParam(value = "teacherid", defaultValue = "0")String courseid ,String from){
+                               @RequestParam(value = "teacherid", defaultValue = "0")String courseid ,String from,HttpSession session){
         Map<String,Object> paramMap = new HashMap();
         paramMap.put("pageno",page);
         paramMap.put("pagesize",rows);
         if(!studentid.equals("0"))  paramMap.put("studentId",studentid);
         if(!courseid.equals("0"))  paramMap.put("courseId",courseid);
+        //判断是老师还是学生权限
+        Student student = (Student) session.getAttribute(Const.STUDENT);
+        if(!StringUtils.isEmpty(student)){
+            //是学生权限，只能查询自己的信息
+            paramMap.put("studentid",student.getId());
+        }
         PageBean<SelectedCourse> pageBean = selectedCourseService.queryPage(paramMap);
         if(!StringUtils.isEmpty(from) && from.equals("combox")){
             return pageBean.getDatas();

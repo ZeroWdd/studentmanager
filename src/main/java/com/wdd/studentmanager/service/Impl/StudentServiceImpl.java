@@ -70,4 +70,9 @@ public class StudentServiceImpl implements StudentService {
             return false;
         }
     }
+
+    @Override
+    public int editPswdByStudent(Student student) {
+        return studenetMapper.editPswdByStudent(student);
+    }
 }

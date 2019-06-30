@@ -88,4 +88,8 @@
         select * from s_student where clazz_id = #{id}
     </select>
 
+    <update id="editPswdByStudent" parameterType="Student">
+        update  s_student set password = #{password} where id = #{id}
+    </update>
+
 </mapper>
