@@ -1,0 +1,49 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.SelectedCourseMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.SelectedCourse" id="SelectedCourseInfo">
+        <result column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+        <result column="course_id" property="courseId"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="SelectedCourseInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_selected_course
+        <where>
+            <if test="studentId!=null"> and student_id LIKE concat("%",#{studentId},"%") </if>
+            <if test="courseId!=null"> and course_id LIKE concat("%",#{courseId},"%") </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_selected_course
+        <where>
+            <if test="studentId!=null"> and student_id LIKE concat("%",#{studentId},"%") </if>
+            <if test="courseId!=null"> and course_id LIKE concat("%",#{courseId},"%") </if>
+        </where>
+    </select>
+
+<!--    <insert id="addCourse" parameterType="Course">-->
+<!--        insert into s_course(name,teacher_id,course_date,max_num,info)-->
+<!--        values(#{name},#{teacherId},#{courseDate},#{maxNum},#{info})-->
+<!--    </insert>-->
+
+<!--    <delete id="deleteCourse" parameterType="java.util.ArrayList">-->
+<!--        delete from s_course-->
+<!--        <where>-->
+<!--            id in-->
+<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
+<!--                #{id}-->
+<!--            </foreach>-->
+<!--        </where>-->
+<!--    </delete>-->
+
+<!--    <update id="editCourse" parameterType="Course">-->
+<!--        update s_course set name = #{name},teacher_id = #{teacherId},course_date = #{courseDate},max_num = #{maxNum},info = #{info} where id = #{id}-->
+<!--    </update>-->
+<!--    -->
+</mapper>
