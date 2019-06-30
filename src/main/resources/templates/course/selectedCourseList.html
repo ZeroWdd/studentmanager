@@ -179,26 +179,21 @@
                             } else{
                                 $.ajax({
                                     type: "post",
-                                    url: "SelectedCourseServlet?method=AddSelectedCourse",
+                                    url: [[@{/selectedCourse/addSelectedCourse}]],
                                     data: $("#addForm").serialize(),
-                                    success: function(msg){
-                                        if(msg == "success"){
-                                            $.messager.alert("消息提醒","选课信息添加成功!","info");
+                                    success: function(data){
+                                        if(data.success){
+                                            $.messager.alert("消息提醒",data.message,"info");
                                             //关闭窗口
                                             $("#addDialog").dialog("close");
                                             //清空原表格数据
                                             $("#add_name").textbox('setValue', "");
                                             //刷新
                                             $('#dataList').datagrid("reload");
-                                        } else if(msg == "courseFull"){
-                                            $.messager.alert("消息提醒","该课程已经选满，不可再选!","warning");
-                                            return;
-                                        } else if(msg == "courseSelected"){
-                                            $.messager.alert("消息提醒","已经选了这门课程，不可再选!","warning");
-                                            return;
                                         }else{
-                                            $.messager.alert("消息提醒","系统内部出错，请联系管理员!","warning");
+                                            $.messager.alert("消息提醒",data.message,"warning");
                                             return;
+
                                         }
                                     }
                                 });
@@ -293,14 +288,14 @@
             <tr>
                 <td style="width:40px">学生:</td>
                 <td colspan="3">
-                    <input id="add_studentList" style="width: 200px; height: 30px;" class="easyui-textbox" name="studentid" />
+                    <input id="add_studentList" style="width: 200px; height: 30px;" class="easyui-textbox" name="studentId" />
                 </td>
                 <td style="width:80px"></td>
             </tr>
             <tr>
                 <td style="width:40px">课程:</td>
                 <td colspan="3">
-                    <input id="add_courseList" style="width: 200px; height: 30px;" class="easyui-textbox" name="courseid" />
+                    <input id="add_courseList" style="width: 200px; height: 30px;" class="easyui-textbox" name="courseId" />
                 </td>
                 <td style="width:80px"></td>
             </tr>

@@ -20,4 +20,5 @@ public interface CourseService {
     int editCourse(Course course);
 
     int deleteCourse(List<Integer> ids);
+
 }

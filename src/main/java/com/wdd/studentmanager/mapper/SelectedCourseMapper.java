@@ -15,4 +15,8 @@ public interface SelectedCourseMapper {
     List<SelectedCourse> queryList(Map<String, Object> paramMap);
 
     Integer queryCount(Map<String, Object> paramMap);
+
+    int addSelectedCourse(SelectedCourse selectedCourse);
+
+    SelectedCourse findBySelectedCourse(SelectedCourse selectedCourse);
 }

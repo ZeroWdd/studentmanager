@@ -50,7 +50,13 @@
         update s_course set name = #{name},teacher_id = #{teacherId},course_date = #{courseDate},max_num = #{maxNum},info = #{info} where id = #{id}
     </update>
 
-<!--    <select id="findByName" parameterType="String" resultType="Clazz">-->
-<!--        select * from s_clazz where name = #{clazzName}-->
-<!--    </select>-->
+    <update id="addStudentNum" parameterType="int">
+         update s_course
+         set selected_num = (case
+            when selected_num = max_num then 50
+            when selected_num &lt; max_num then selected_num+1
+            end
+         )
+         where id = #{courseId}
+    </update>
 </mapper>

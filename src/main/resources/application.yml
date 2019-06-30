@@ -1,7 +1,7 @@
 spring:
   datasource:
     driver-class-name: com.mysql.jdbc.Driver
-    url: jdbc:mysql://127.0.0.1:3306/studentmanager?setUnicode=true&characterEncoding=utf8
+    url: jdbc:mysql://127.0.0.1:3306/studentmanager?setUnicode=true&characterEncoding=utf8&useAffectedRows=true
     username: root
     password: 123
   servlet:

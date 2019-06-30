@@ -21,4 +21,6 @@ public interface CourseMapper {
     int editCourse(Course course);
 
     int deleteCourse(List<Integer> ids);
+
+    int addStudentNum(Integer courseId);
 }

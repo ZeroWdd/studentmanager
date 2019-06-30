@@ -27,10 +27,10 @@
         </where>
     </select>
 
-<!--    <insert id="addCourse" parameterType="Course">-->
-<!--        insert into s_course(name,teacher_id,course_date,max_num,info)-->
-<!--        values(#{name},#{teacherId},#{courseDate},#{maxNum},#{info})-->
-<!--    </insert>-->
+    <insert id="addSelectedCourse" parameterType="SelectedCourse">
+        insert into s_selected_course(student_id,course_id)
+        values(#{studentId},#{courseId})
+    </insert>
 
 <!--    <delete id="deleteCourse" parameterType="java.util.ArrayList">-->
 <!--        delete from s_course-->
@@ -46,4 +46,10 @@
 <!--        update s_course set name = #{name},teacher_id = #{teacherId},course_date = #{courseDate},max_num = #{maxNum},info = #{info} where id = #{id}-->
 <!--    </update>-->
 <!--    -->
+
+
+    <select id="findBySelectedCourse" resultType="SelectedCourse" >
+        select * from s_selected_course
+        where student_id = #{studentId} and course_id = #{courseId}
+    </select>
 </mapper>
