@@ -3,6 +3,7 @@ package com.wdd.studentmanager.service;
 import com.wdd.studentmanager.domain.SelectedCourse;
 import com.wdd.studentmanager.util.PageBean;
 
+import java.util.List;
 import java.util.Map;
 
 /**
@@ -19,4 +20,6 @@ public interface SelectedCourseService {
     int deleteSelectedCourse(Integer id);
 
     boolean isStudentId(int id);
+
+    List<SelectedCourse> getAllBySid(int studentid);
 }

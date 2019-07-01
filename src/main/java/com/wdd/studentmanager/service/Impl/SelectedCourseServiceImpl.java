@@ -77,4 +77,9 @@ public class SelectedCourseServiceImpl implements SelectedCourseService {
             return false;
         }
     }
+
+    @Override
+    public List<SelectedCourse> getAllBySid(int studentid) {
+        return selectedCourseMapper.getAllBySid(studentid);
+    }
 }

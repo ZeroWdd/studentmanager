@@ -1,0 +1,93 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.AttendanceMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Attendance" id="AttendanceInfo">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="student_id" property="studentId"/>
+        <result column="type" property="type"/>
+        <result column="date" property="date"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="AttendanceInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_attendance
+        <where>
+            <if test="courseid!=null"> and course_id = #{courseid} </if>
+            <if test="studentid!=null"> and student_id = #{studentid} </if>
+            <if test="type!=null"> and type = #{type} </if>
+            <if test="date!=null"> and date = #{date} </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_attendance
+        <where>
+            <if test="courseid!=null"> and course_id = #{courseid} </if>
+            <if test="studentid!=null"> and student_id = #{studentid} </if>
+            <if test="type!=null"> and type = #{type} </if>
+            <if test="date!=null"> and date = #{date} </if>
+        </where>
+    </select>
+
+<!--    <insert id="addStudent" parameterType="Student">-->
+<!--        insert into s_student(sn,username,password,clazz_id,sex,mobile,qq,photo)-->
+<!--        values(#{sn},#{username},#{password},#{clazzId},#{sex},#{mobile},#{qq},#{photo})-->
+<!--    </insert>-->
+
+<!--    <delete id="deleteStudent" parameterType="java.util.ArrayList">-->
+<!--        delete from s_student-->
+<!--        <where>-->
+<!--            id in-->
+<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
+<!--                #{id}-->
+<!--            </foreach>-->
+<!--        </where>-->
+<!--    </delete>-->
+
+<!--    <update id="editStudent" parameterType="Student">-->
+<!--        update s_student-->
+<!--        <set>-->
+<!--            <if test="username != null">-->
+<!--                username = #{username},-->
+<!--            </if>-->
+<!--            <if test="clazzId != null">-->
+<!--                clazz_id = #{clazzId},-->
+<!--            </if>-->
+<!--            <if test="sex != null">-->
+<!--                sex = #{sex},-->
+<!--            </if>-->
+<!--            <if test="mobile != null">-->
+<!--                mobile = #{mobile},-->
+<!--            </if>-->
+<!--            <if test="qq != null">-->
+<!--                qq = #{qq},-->
+<!--            </if>-->
+<!--            <if test="photo != null">-->
+<!--                photo = #{photo},-->
+<!--            </if>-->
+<!--        </set>-->
+<!--        where id = #{id}-->
+<!--    </update>-->
+
+
+<!--    <select id="findById" parameterType="int" resultType="Student">-->
+<!--        select * from s_student where id = #{sid}-->
+<!--    </select>-->
+
+<!--    <select id="findByStudent" parameterType="Student" resultType="Student">-->
+<!--        select * from s_student where username = #{username} and password = #{password}-->
+<!--    </select>-->
+
+<!--    <select id="isStudentByClazzId" parameterType="int" resultMap="StudentInfo">-->
+<!--        select * from s_student where clazz_id = #{id}-->
+<!--    </select>-->
+
+<!--    <update id="editPswdByStudent" parameterType="Student">-->
+<!--        update  s_student set password = #{password} where id = #{id}-->
+<!--    </update>-->
+
+</mapper>

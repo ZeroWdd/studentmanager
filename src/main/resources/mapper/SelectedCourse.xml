@@ -52,4 +52,9 @@
         select * from s_selected_course
         where student_id = #{id}
     </select>
+
+    <select id="getAllBySid" parameterType="int" resultMap="SelectedCourseInfo" >
+        select * from s_selected_course
+        where student_id = #{studentid}
+    </select>
 </mapper>
