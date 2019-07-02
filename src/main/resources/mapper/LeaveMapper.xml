@@ -1,0 +1,75 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.LeaveMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Leave" id="LeaveInfo">
+        <result column="id" property="id"/>
+        <result column="student_id" property="studentId"/>
+        <result column="info" property="info"/>
+        <result column="status" property="status"/>
+        <result column="remark" property="remark"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="LeaveInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_leave
+        <where>
+            <if test="studentId!=null"> and student_id = #{studentId} </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_leave
+        <where>
+            <if test="studentId!=null"> and student_id = #{studentId} </if>
+        </where>
+    </select>
+
+    <insert id="addLeave" parameterType="Leave">
+        insert into s_leave(student_id,info)
+        values(#{studentId},#{info})
+    </insert>
+
+    <delete id="deleteLeave" parameterType="int">
+        delete from s_leave where id = #{id}
+    </delete>
+
+    <update id="editLeave" parameterType="Leave">
+        update s_leave set student_id = #{studentId},info = #{info} where id = #{id}
+    </update>
+
+    <update id="checkLeave" parameterType="Leave">
+        update s_leave set student_id = #{studentId},info = #{info},status = #{status},remark = #{remark} where id = #{id}
+    </update>
+
+<!--    <update id="addStudentNum" parameterType="int">-->
+<!--         update s_course-->
+<!--         set selected_num = (case-->
+<!--            when selected_num = max_num then 50-->
+<!--            when selected_num &lt; max_num then selected_num+1-->
+<!--            end-->
+<!--         )-->
+<!--         where id = #{courseId}-->
+<!--    </update>-->
+
+<!--    <update id="deleteStudentNum" parameterType="int">-->
+<!--         update s_course-->
+<!--         set selected_num = selected_num-1-->
+<!--         where id = #{courseId}-->
+<!--    </update>-->
+
+<!--    <select id="getCourseById" parameterType="java.util.List" resultType="Course">-->
+<!--        select *-->
+<!--        from s_course-->
+<!--        <where>-->
+<!--            id in-->
+<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
+<!--                #{id}-->
+<!--            </foreach>-->
+<!--        </where>-->
+<!--    </select>-->
+
+
+</mapper>
