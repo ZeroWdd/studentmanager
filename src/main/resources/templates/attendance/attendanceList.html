@@ -142,15 +142,13 @@
                                 type: "post",
                                 url: [[@{/attendance/deleteAttendance}]],
                                 data: {id: id},
-                                success: function(msg){
-                                    if(msg == "success"){
-                                        $.messager.alert("消息提醒","删除成功!","info");
+                                success: function(data){
+                                    if(data.success){
+                                        $.messager.alert("消息提醒",data.message,"info");
                                         //刷新表格
                                         $("#dataList").datagrid("reload");
-                                    }else if(msg == "not found"){
-                                        $.messager.alert("消息提醒","不存在该选课记录!","info");
-                                    }else{
-                                        $.messager.alert("消息提醒","删除失败!","warning");
+                                    } else{
+                                        $.messager.alert("消息提醒",data.message,"warning");
                                         return;
                                     }
                                 }
@@ -362,14 +360,14 @@
             <tr>
                 <td style="width:40px">学生:</td>
                 <td colspan="3">
-                    <input id="add_studentList" style="width: 200px; height: 30px;" class="easyui-textbox" name="studentid" data-options="required:true, missingMessage:'请选择学生'" />
+                    <input id="add_studentList" style="width: 200px; height: 30px;" class="easyui-textbox" name="studentId" data-options="required:true, missingMessage:'请选择学生'" />
                 </td>
                 <td style="width:80px"></td>
             </tr>
             <tr>
                 <td style="width:40px">课程:</td>
                 <td colspan="3">
-                    <input id="add_courseList" style="width: 200px; height: 30px;" class="easyui-textbox" name="courseid" data-options="required:true, missingMessage:'请选择课程'" />
+                    <input id="add_courseList" style="width: 200px; height: 30px;" class="easyui-textbox" name="courseId" data-options="required:true, missingMessage:'请选择课程'" />
                 </td>
                 <td style="width:80px"></td>
             </tr>

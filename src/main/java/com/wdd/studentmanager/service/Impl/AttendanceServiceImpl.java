@@ -35,4 +35,24 @@ public class AttendanceServiceImpl implements AttendanceService {
         pageBean.setTotalsize(totalsize);
         return pageBean;
     }
+
+    @Override
+    public boolean isAttendance(Attendance attendance) {
+        Attendance at = attendanceMapper.isAttendance(attendance);
+        if(at != null){
+            return true;
+        }else{
+            return false;
+        }
+    }
+
+    @Override
+    public int addAtendance(Attendance attendance) {
+        return attendanceMapper.addAtendance(attendance);
+    }
+
+    @Override
+    public int deleteAttendance(Integer id) {
+        return attendanceMapper.deleteAttendance(id);
+    }
 }

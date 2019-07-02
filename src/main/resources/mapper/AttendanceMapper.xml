@@ -33,20 +33,14 @@
         </where>
     </select>
 
-<!--    <insert id="addStudent" parameterType="Student">-->
-<!--        insert into s_student(sn,username,password,clazz_id,sex,mobile,qq,photo)-->
-<!--        values(#{sn},#{username},#{password},#{clazzId},#{sex},#{mobile},#{qq},#{photo})-->
-<!--    </insert>-->
+    <insert id="addAtendance" parameterType="Attendance">
+        insert into s_attendance(course_id,student_id,type,date)
+        values(#{courseId},#{studentId},#{type},#{date})
+    </insert>
 
-<!--    <delete id="deleteStudent" parameterType="java.util.ArrayList">-->
-<!--        delete from s_student-->
-<!--        <where>-->
-<!--            id in-->
-<!--            <foreach collection="list" open="(" close=")" separator="," item="id">-->
-<!--                #{id}-->
-<!--            </foreach>-->
-<!--        </where>-->
-<!--    </delete>-->
+    <delete id="deleteAttendance" parameterType="int">
+        delete from s_attendance where id = #{id}
+    </delete>
 
 <!--    <update id="editStudent" parameterType="Student">-->
 <!--        update s_student-->
@@ -82,9 +76,9 @@
 <!--        select * from s_student where username = #{username} and password = #{password}-->
 <!--    </select>-->
 
-<!--    <select id="isStudentByClazzId" parameterType="int" resultMap="StudentInfo">-->
-<!--        select * from s_student where clazz_id = #{id}-->
-<!--    </select>-->
+    <select id="isAttendance" parameterType="Attendance" resultType="Attendance">
+        select * from s_attendance where course_id = #{courseId} and student_id = #{studentId} and type = #{type} and date = #{date}
+    </select>
 
 <!--    <update id="editPswdByStudent" parameterType="Student">-->
 <!--        update  s_student set password = #{password} where id = #{id}-->

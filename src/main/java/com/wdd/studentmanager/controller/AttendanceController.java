@@ -7,21 +7,17 @@ import com.wdd.studentmanager.domain.Student;
 import com.wdd.studentmanager.service.AttendanceService;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.SelectedCourseService;
+import com.wdd.studentmanager.util.AjaxResult;
 import com.wdd.studentmanager.util.Const;
+import com.wdd.studentmanager.util.DateFormatUtil;
 import com.wdd.studentmanager.util.PageBean;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.util.StringUtils;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.ResponseBody;
+import org.springframework.web.bind.annotation.*;
 
 import javax.servlet.http.HttpSession;
-import java.util.ArrayList;
-import java.util.HashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * @Classname AttendanceController
@@ -110,4 +106,58 @@ public class AttendanceController {
     }
 
 
+    /**
+     * 添加考勤签到
+     * @param attendance
+     * @return
+     */
+    @PostMapping("/addAttendance")
+    @ResponseBody
+    public AjaxResult addAttendance(Attendance attendance){
+        AjaxResult ajaxResult = new AjaxResult();
+        attendance.setDate(DateFormatUtil.getFormatDate(new Date(),"yyyy-MM-dd"));
+        //判断是否已签到
+        if(attendanceService.isAttendance(attendance)){
+            //true为已签到
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("已签到，请勿重复签到！");
+        }else{
+            int count = attendanceService.addAtendance(attendance);
+            if(count > 0){
+                //签到成功
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("签到成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("系统错误，请重新签到");
+            }
+        }
+        return ajaxResult;
+    }
+
+    /**
+     * 删除考勤签到
+     * @param id
+     * @return
+     */
+    @PostMapping("/deleteAttendance")
+    @ResponseBody
+    public AjaxResult deleteAttendance(Integer id){
+        AjaxResult ajaxResult = new AjaxResult();
+        try {
+            int count = attendanceService.deleteAttendance(id);
+            if(count > 0){
+                ajaxResult.setSuccess(true);
+                ajaxResult.setMessage("删除成功");
+            }else{
+                ajaxResult.setSuccess(false);
+                ajaxResult.setMessage("删除失败");
+            }
+        } catch (Exception e) {
+            ajaxResult.setSuccess(false);
+            ajaxResult.setMessage("系统异常,请重试");
+            e.printStackTrace();
+        }
+        return ajaxResult;
+    }
 }
