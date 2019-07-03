@@ -12,7 +12,6 @@
     <script type="text/javascript" th:inline="javascript">
         /*<![CDATA[*/
          var usertype = [[${session.usertype}]];
-         console.log(usertype);
          if(usertype == "1" || usertype == "3"){
              var _menus = {"menus":[
                      {"menuid":"2","icon":"","menuname":"学生信息管理",
@@ -50,6 +49,24 @@
                              {"menuid":"91","menuname":"请假列表","icon":"icon-book-open","url":/*[[@{/leave/leave_list}]]*/},
                          ]
                      },
+                     {
+                         "menuid": "10", "icon": "", "menuname": "成绩信息管理",
+                         "menus": [
+                             {
+                                 "menuid": "101",
+                                 "menuname": "成绩列表",
+                                 "icon": "icon-book-open",
+                                 "url": /*[[@{/score/score_list}]]*/
+                             },
+                             // {
+                             //     "menuid": "101",
+                             //     "menuname": "成绩统计",
+                             //     "icon": "icon-book-open",
+                             //     "url": "ScoreServlet?method=toScoreStatsView"
+                             // },
+
+                         ]
+                     },
                      {"menuid":"5","icon":"","menuname":"系统管理",
                          "menus":[
                              {"menuid":"51","menuname":"修改密码","icon":"icon-set","url":/*[[@{/system/personalView}]]*/},
@@ -77,6 +94,17 @@
                      {"menuid":"9","icon":"","menuname":"请假信息管理",
                          "menus":[
                              {"menuid":"91","menuname":"请假列表","icon":"icon-book-open","url":/*[[@{/leave/leave_list}]]*/},
+                         ]
+                     },
+                     {
+                         "menuid": "10", "icon": "", "menuname": "成绩信息管理",
+                         "menus": [
+                             {
+                                 "menuid": "101",
+                                 "menuname": "成绩列表",
+                                 "icon": "icon-book-open",
+                                 "url": /*[[@{/score/score_list}]]*/
+                             }
                          ]
                      },
                      {"menuid":"5","icon":"","menuname":"系统管理",

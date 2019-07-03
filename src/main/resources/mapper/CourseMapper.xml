@@ -77,5 +77,8 @@
         </where>
     </select>
 
+    <select id="findByName" parameterType="java.lang.String" resultType="int">
+        select id from s_course where name = #{name}
+    </select>
 
 </mapper>

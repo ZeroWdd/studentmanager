@@ -92,4 +92,8 @@
         update  s_student set password = #{password} where id = #{id}
     </update>
 
+    <select id="findByName" parameterType="java.lang.String" resultType="int">
+        select id from s_student where username = #{name}
+    </select>
+
 </mapper>

@@ -28,4 +28,6 @@ public interface StudentService {
     boolean isStudentByClazzId(Integer next);
 
     int editPswdByStudent(Student student);
+
+    int findByName(String username);
 }

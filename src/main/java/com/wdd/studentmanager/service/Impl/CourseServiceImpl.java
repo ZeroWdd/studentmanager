@@ -56,4 +56,9 @@ public class CourseServiceImpl implements CourseService {
         return courseMapper.getCourseById(ids);
     }
 
+    @Override
+    public int findByName(String name) {
+        return courseMapper.findByName(name);
+    }
+
 }

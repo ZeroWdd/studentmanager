@@ -1,0 +1,95 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.wdd.studentmanager.mapper.ScoreMapper">
+
+    <resultMap type="com.wdd.studentmanager.domain.Score" id="ScoreInfo">
+        <result column="id" property="id"/>
+        <result column="course_id" property="courseId"/>
+        <result column="student_id" property="studentId"/>
+        <result column="score" property="score"/>
+        <result column="remark" property="remark"/>
+        <result column="courseName" property="courseName"/>
+        <result column="studentName" property="studentName"/>
+    </resultMap>
+
+    <select id="queryList" resultMap="ScoreInfo" >
+        <!-- 根据条件查询 图书的所有信息 -->
+        SELECT *
+        from s_score
+        <where>
+            <if test="courseid!=null"> and course_id = #{courseid} </if>
+            <if test="studentid!=null"> and student_id = #{studentid} </if>
+        </where>
+        limit #{startIndex},#{pagesize}
+    </select>
+
+    <select id="queryCount" resultType="int" >
+        select count(*) from s_score
+        <where>
+            <if test="courseid!=null"> and course_id = #{courseid} </if>
+            <if test="studentid!=null"> and student_id = #{studentid} </if>
+        </where>
+    </select>
+
+    <insert id="addScore" parameterType="Score">
+        insert into s_score(course_id,student_id,score,remark)
+        values(#{courseId},#{studentId},#{score},#{remark})
+    </insert>
+
+    <delete id="deleteScore" parameterType="int">
+        delete from s_score where id = #{id}
+    </delete>
+
+    <!--    <update id="editStudent" parameterType="Student">-->
+    <!--        update s_student-->
+    <!--        <set>-->
+    <!--            <if test="username != null">-->
+    <!--                username = #{username},-->
+    <!--            </if>-->
+    <!--            <if test="clazzId != null">-->
+    <!--                clazz_id = #{clazzId},-->
+    <!--            </if>-->
+    <!--            <if test="sex != null">-->
+    <!--                sex = #{sex},-->
+    <!--            </if>-->
+    <!--            <if test="mobile != null">-->
+    <!--                mobile = #{mobile},-->
+    <!--            </if>-->
+    <!--            <if test="qq != null">-->
+    <!--                qq = #{qq},-->
+    <!--            </if>-->
+    <!--            <if test="photo != null">-->
+    <!--                photo = #{photo},-->
+    <!--            </if>-->
+    <!--        </set>-->
+    <!--        where id = #{id}-->
+    <!--    </update>-->
+
+
+    <!--    <select id="findById" parameterType="int" resultType="Student">-->
+    <!--        select * from s_student where id = #{sid}-->
+    <!--    </select>-->
+
+    <!--    <select id="findByStudent" parameterType="Student" resultType="Student">-->
+    <!--        select * from s_student where username = #{username} and password = #{password}-->
+    <!--    </select>-->
+
+    <select id="isScore" parameterType="Score" resultType="Score">
+        select * from s_score where course_id = #{courseId} and student_id = #{studentId}
+    </select>
+
+    <update id="editScore" parameterType="Score">
+        update  s_score set course_id = #{courseId},student_id = #{studentId},score = #{score}, remark = #{remark} where id = #{id}
+    </update>
+
+    <select id="getAll" parameterType="Score" resultMap="ScoreInfo">
+        select  s_score.score,s_score.remark,s_course.name as courseName,s_student.username as studentName
+        from s_score,s_course,s_student
+        <where>
+            s_score.course_id = s_course.id and s_score.student_id = s_student.id
+            <if test="courseId!=null and courseId != ''"> and course_id = #{courseId} </if>
+            <if test="studentId!=null and studentId != ''"> and student_id = #{studentId} </if>
+        </where>
+    </select>
+
+</mapper>

@@ -27,4 +27,6 @@ public interface CourseMapper {
     void deleteStudentNum(Integer courseId);
 
     List<Course> getCourseById(List<Integer> ids);
+
+    int findByName(String name);
 }

@@ -22,4 +22,6 @@ public interface CourseService {
     int deleteCourse(List<Integer> ids);
 
     List<Course> getCourseById(List<Integer> ids);
+
+    int findByName(String name);
 }
