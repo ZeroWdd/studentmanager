@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.service.Impl;
 
 import com.wdd.studentmanager.domain.Score;
+import com.wdd.studentmanager.domain.ScoreStats;
 import com.wdd.studentmanager.mapper.ScoreMapper;
 import com.wdd.studentmanager.service.ScoreService;
 import com.wdd.studentmanager.util.PageBean;
@@ -64,5 +65,10 @@ public class ScoreServiceImpl implements ScoreService {
     @Override
     public List<Score> getAll(Score score) {
         return scoreMapper.getAll(score);
+    }
+
+    @Override
+    public ScoreStats getAvgStats(Integer courseid) {
+        return scoreMapper.getAvgStats(courseid);
     }
 }

@@ -2,7 +2,7 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>成绩统计</title>
+    <title>成绩列表</title>
     <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/default/easyui.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/easyui/themes/icon.css}">
     <link rel="stylesheet" type="text/css" th:href="@{/easyui/css/demo.css}">
@@ -434,18 +434,16 @@
 </table>
 <!-- 工具栏 -->
 <div id="toolbar">
-<!--    <c:if test="${userType != 2}">-->
-        <div style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
+        <div th:if="${session.usertype == '1' || session.usertype == '3'}" style="float: left;"><a id="add" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">添加</a></div>
         <div style="float: left;" class="datagrid-btn-separator"></div>
         <div style="float: left;"><a id="import" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">导入</a></div>
         <div style="float: left;" class="datagrid-btn-separator"></div>
         <div style="float: left;"><a id="export" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-add',plain:true">导出</a></div>
         <div style="float: left;" class="datagrid-btn-separator"></div>
-        <div style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
+        <div th:if="${session.usertype == '1' || session.usertype == '3'}" style="float: left;"><a id="edit" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-edit',plain:true">修改</a></div>
         <div style="float: left;" class="datagrid-btn-separator"></div>
-        <div style="float: left; margin-right: 10px;"><a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a></div>
+        <div th:if="${session.usertype == '1' || session.usertype == '3'}" style="float: left; margin-right: 10px;"><a id="delete" href="javascript:;" class="easyui-linkbutton" data-options="iconCls:'icon-some-delete',plain:true">删除</a></div>
         <div style="float: left;" class="datagrid-btn-separator"></div>
-<!--    </c:if>-->
     <div style="margin-top: 3px;">
         学生：<input id="studentList" class="easyui-textbox" name="studentList" />
         课程：<input id="courseList" class="easyui-textbox" name="courseList" />

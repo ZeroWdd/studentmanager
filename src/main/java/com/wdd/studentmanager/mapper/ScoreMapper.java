@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.mapper;
 
 import com.wdd.studentmanager.domain.Score;
+import com.wdd.studentmanager.domain.ScoreStats;
 
 import java.util.List;
 import java.util.Map;
@@ -25,4 +26,6 @@ public interface ScoreMapper {
     int deleteScore(Integer id);
 
     List<Score> getAll(Score score);
+
+    ScoreStats getAvgStats(Integer courseid);
 }

@@ -83,7 +83,7 @@
     </update>
 
     <select id="getAll" parameterType="Score" resultMap="ScoreInfo">
-        select  s_score.score,s_score.remark,s_course.name as courseName,s_student.username as studentName
+        select  s_score.*,s_course.name as courseName,s_student.username as studentName
         from s_score,s_course,s_student
         <where>
             s_score.course_id = s_course.id and s_score.student_id = s_student.id
@@ -91,5 +91,12 @@
             <if test="studentId!=null and studentId != ''"> and student_id = #{studentId} </if>
         </where>
     </select>
+
+    <select id="getAvgStats" parameterType="int" resultType="ScoreStats">
+        select max(s_score.score) as max_score,avg(s_score.score) as avg_score,min(s_score.score) as min_score,s_course.name as courseName
+        from s_score,s_course
+        where s_score.course_id=s_course.id and s_score.course_id = #{courseid}
+    </select>
+
 
 </mapper>

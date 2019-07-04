@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.controller;
 
 import com.wdd.studentmanager.domain.Score;
+import com.wdd.studentmanager.domain.ScoreStats;
 import com.wdd.studentmanager.domain.Student;
 import com.wdd.studentmanager.service.CourseService;
 import com.wdd.studentmanager.service.ScoreService;
@@ -25,6 +26,7 @@ import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.InputStream;
 import java.net.URLEncoder;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
@@ -256,6 +258,12 @@ public class ScoreController {
     }
 
 
+    /**
+     * 导出xlsx表
+     * @param response
+     * @param score
+     * @param session
+     */
     @RequestMapping("/exportScore")
     @ResponseBody
     private void exportScore(HttpServletResponse response,Score score,HttpSession session) {
@@ -294,4 +302,102 @@ public class ScoreController {
             e.printStackTrace();
         }
     }
+
+
+    /**
+     * 跳转统计页面
+     * @return
+     */
+    @RequestMapping("/scoreStats")
+    public String scoreStats(){
+        return "/score/scoreStats";
+    }
+
+
+    /**
+     * 统计成绩数据
+     * @param courseid
+     * @param searchType
+     * @return
+     */
+    @RequestMapping("/getScoreStatsList")
+    @ResponseBody
+    public Object getScoreStatsList(@RequestParam(value = "courseid", defaultValue = "0")Integer courseid,
+                                        String searchType){
+        AjaxResult ajaxResult = new AjaxResult();
+        if(searchType.equals("avg")){
+            ScoreStats scoreStats = scoreService.getAvgStats(courseid);
+
+            List<Double> scoreList = new ArrayList<Double>();
+            scoreList.add(scoreStats.getMax_score());
+            scoreList.add(scoreStats.getMin_score());
+            scoreList.add(scoreStats.getAvg_score());
+
+            List<String> avgStringList = new ArrayList<String>();
+            avgStringList.add("最高分");
+            avgStringList.add("最低分");
+            avgStringList.add("平均分");
+
+            Map<String, Object> retMap = new HashMap<String, Object>();
+            retMap.put("courseName", scoreStats.getCourseName());
+            retMap.put("scoreList", scoreList);
+            retMap.put("avgList", avgStringList);
+            retMap.put("type", "success");
+
+            return retMap;
+        }
+
+        Score score = new Score();
+        score.setCourseId(courseid);
+        List<Score> scoreList = scoreService.getAll(score);
+
+
+        List<Integer> numberList = new ArrayList<Integer>();
+        numberList.add(0);
+        numberList.add(0);
+        numberList.add(0);
+        numberList.add(0);
+        numberList.add(0);
+
+        List<String> rangeStringList = new ArrayList<String>();
+        rangeStringList.add("60分以下");
+        rangeStringList.add("60~70分");
+        rangeStringList.add("70~80分");
+        rangeStringList.add("80~90分");
+        rangeStringList.add("90~100分");
+
+        String courseName = "";
+
+        for(Score sc : scoreList){
+            courseName = sc.getCourseName();  //获取课程名
+            double scoreValue = sc.getScore();//获取成绩
+            if(scoreValue < 60){
+                numberList.set(0, numberList.get(0)+1);
+                continue;
+            }
+            if(scoreValue <= 70 && scoreValue >= 60){
+                numberList.set(1, numberList.get(1)+1);
+                continue;
+            }
+            if(scoreValue <= 80 && scoreValue > 70){
+                numberList.set(2, numberList.get(2)+1);
+                continue;
+            }
+            if(scoreValue <= 90 && scoreValue > 80){
+                numberList.set(3, numberList.get(3)+1);
+                continue;
+            }
+            if(scoreValue <= 100 && scoreValue > 90){
+                numberList.set(4, numberList.get(4)+1);
+                continue;
+            }
+        }
+        Map<String, Object> retMap = new HashMap<String, Object>();
+        retMap.put("courseName", courseName);
+        retMap.put("numberList", numberList);
+        retMap.put("rangeList", rangeStringList);
+        retMap.put("type", "success");
+        return retMap;
+    }
+
 }

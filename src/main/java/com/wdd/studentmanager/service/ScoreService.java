@@ -1,6 +1,7 @@
 package com.wdd.studentmanager.service;
 
 import com.wdd.studentmanager.domain.Score;
+import com.wdd.studentmanager.domain.ScoreStats;
 import com.wdd.studentmanager.util.PageBean;
 
 import java.util.List;
@@ -24,4 +25,6 @@ public interface ScoreService {
     int deleteScore(Integer id);
 
     List<Score> getAll(Score score);
+
+    ScoreStats getAvgStats(Integer courseid);
 }
