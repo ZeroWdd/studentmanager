@@ -24,13 +24,36 @@
 
 ## 完成进度：
 
-> 管理员 ： 增删改查
->
-> 教师 ： 增删改查
->
-> 学生 ： 增删改查
->
-> 图片上传
+	> 完成
 
+## 系统功能 :
 
+> 学生信息管理
+>
+> 班级信息管理
+>
+> 教师信息管理
+>
+> 课程信息管理
+>
+> 选课信息管理
+>
+> 考勤信息管理
+>
+> 请假信息管理
+>
+> 成绩信息管理
+>
+> 系统管理
 
+## 项目截图：
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/1.png)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/2.png)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/3.png)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/4.png)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/5.png)
