@@ -1,5 +1,9 @@
 # 学生管理系统
 
+## 简介：
+
+题目虽然是学生管理系统，但功能包含(学生，教师，管理员),项目基于springboot2.1.x实现的管理系统。如果你是spring boot初学者，那么此项目非常适合你。如果喜欢，请随手给个star，谢谢。
+
 ## 编译环境 ：
 
 >jdk 1.8 
@@ -57,3 +61,16 @@
 ![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/4.png)
 
 ![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/5.png)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/6.jpg)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/7.jpg)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/8.jpg)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/9.jpg)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/项目截图/10.jpg)
+
+![](https://gitee.com/ZeroWdd/studentmanager/raw/master/%E9%A1%B9%E7%9B%AE%E6%88%AA%E5%9B%BE/11.jpg)
+
