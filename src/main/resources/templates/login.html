@@ -39,12 +39,13 @@
         $("#submitBtn").click(function(){
         	$.ajax({
         		type: "post",
-        		url: /*[[@{/system/login}]]*/,
+			// 这里谁缺德把方法URL给注解掉的 我给改回来了之前是 /*[[@{/system/index}]]*/ 这种。正确的写法是" /system/index "
+        		url: "/system/login",
         		data: $("#form").serialize(),
         		dataType: "json", //返回数据类型
         		success: function(data){
         			if(data.success){
-                        window.location.href = /*[[@{/system/index}]]*/;
+                        window.location.href = "/system/index";
                     }else{
                         $.messager.alert("消息提醒", data.message, "warning");
                         $("#vcodeImg").click();//切换验证码
