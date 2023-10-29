@@ -10,7 +10,7 @@ spring:
       max-request-size: 30Mb
 
 
-mybatis:
+mybatis-plus:
   type-aliases-package: com.wdd.studentmanager.domain
   mapper-locations: classpath:mapper/*.xml
 

@@ -1,9 +1,6 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
 <mapper namespace="com.wdd.studentmanager.mapper.AdminMapper">
-    <select id="findByAdmin" parameterType="Admin" resultType="Admin">
-        select * from s_admin where username = #{username} and password = #{password}
-    </select>
 
     <update id="editPswdByAdmin" parameterType="Admin">
         update  s_admin set password = #{password} where id = #{id}

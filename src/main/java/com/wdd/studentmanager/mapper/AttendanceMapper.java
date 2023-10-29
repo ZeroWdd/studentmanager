@@ -1,9 +1,8 @@
 package com.wdd.studentmanager.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wdd.studentmanager.domain.Attendance;
-
-import java.util.List;
-import java.util.Map;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Classname AttendanceMapper
@@ -11,10 +10,8 @@ import java.util.Map;
  * @Date 2019/7/1 15:49
  * @Created by WDD
  */
-public interface AttendanceMapper {
-    List<Attendance> queryList(Map<String, Object> paramMap);
-
-    Integer queryCount(Map<String, Object> paramMap);
+@Mapper
+public interface AttendanceMapper extends BaseMapper<Attendance> {
 
     int addAtendance(Attendance attendance);
 

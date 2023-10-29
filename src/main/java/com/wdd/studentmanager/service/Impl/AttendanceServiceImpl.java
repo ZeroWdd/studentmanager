@@ -1,5 +1,6 @@
 package com.wdd.studentmanager.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wdd.studentmanager.domain.Attendance;
 import com.wdd.studentmanager.mapper.AttendanceMapper;
 import com.wdd.studentmanager.service.AttendanceService;
@@ -24,24 +25,33 @@ public class AttendanceServiceImpl implements AttendanceService {
 
     @Override
     public PageBean<Attendance> queryPage(Map<String, Object> paramMap) {
-        PageBean<Attendance> pageBean = new PageBean<>((Integer) paramMap.get("pageno"),(Integer) paramMap.get("pagesize"));
-
+        Integer pagesize = (Integer) paramMap.get("pagesize");
+        PageBean<Attendance> pageBean = new PageBean<>((Integer) paramMap.get("pageno"), pagesize);
         Integer startIndex = pageBean.getStartIndex();
-        paramMap.put("startIndex",startIndex);
-        List<Attendance> datas = attendanceMapper.queryList(paramMap);
-        pageBean.setDatas(datas);
 
-        Integer totalsize = attendanceMapper.queryCount(paramMap);
-        pageBean.setTotalsize(totalsize);
+        LambdaQueryWrapper<Attendance> queryWrapper = new LambdaQueryWrapper<>();
+        String courseid = (String) paramMap.get("courseid");
+        String studentid = (String) paramMap.get("studentid");
+        String type = (String) paramMap.get("type");
+        String date = (String) paramMap.get("date");
+        queryWrapper
+                .eq(courseid != null, Attendance::getCourseId, courseid)
+                .eq(studentid != null, Attendance::getStudentId, studentid)
+                .eq(type != null, Attendance::getType, type)
+                .eq(date != null, Attendance::getDate, date)
+                .last("limit " + startIndex + ", " + pagesize);
+        List<Attendance> attendances = attendanceMapper.selectList(queryWrapper);
+        pageBean.setDatas(attendances);
+        pageBean.setTotalsize(attendances.size());
         return pageBean;
     }
 
     @Override
     public boolean isAttendance(Attendance attendance) {
         Attendance at = attendanceMapper.isAttendance(attendance);
-        if(at != null){
+        if (at != null) {
             return true;
-        }else{
+        } else {
             return false;
         }
     }
