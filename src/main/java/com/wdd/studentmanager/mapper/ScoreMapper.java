@@ -1,7 +1,9 @@
 package com.wdd.studentmanager.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wdd.studentmanager.domain.Score;
 import com.wdd.studentmanager.domain.ScoreStats;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -12,7 +14,8 @@ import java.util.Map;
  * @Date 2019/7/3 11:47
  * @Created by WDD
  */
-public interface ScoreMapper {
+@Mapper
+public interface ScoreMapper extends BaseMapper<Score> {
     List<Score> queryList(Map<String, Object> paramMap);
 
     Integer queryCount(Map<String, Object> paramMap);

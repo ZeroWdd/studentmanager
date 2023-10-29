@@ -1,5 +1,6 @@
 package com.wdd.studentmanager.service.Impl;
 
+import com.baomidou.mybatisplus.core.conditions.query.LambdaQueryWrapper;
 import com.wdd.studentmanager.domain.Admin;
 import com.wdd.studentmanager.mapper.AdminMapper;
 import com.wdd.studentmanager.service.AdminService;
@@ -20,7 +21,11 @@ public class AdminServiceImpl implements AdminService {
 
     @Override
     public Admin findByAdmin(Admin admin) {
-        return adminMapper.findByAdmin(admin);
+        LambdaQueryWrapper<Admin> queryWrapper = new LambdaQueryWrapper<>();
+        queryWrapper
+                .eq(Admin::getUsername, admin.getUsername())
+                .eq(Admin::getPassword, admin.getPassword());
+        return adminMapper.selectOne(queryWrapper);
     }
 
     @Override

@@ -1,6 +1,8 @@
 package com.wdd.studentmanager.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wdd.studentmanager.domain.SelectedCourse;
+import org.apache.ibatis.annotations.Mapper;
 
 import java.util.List;
 import java.util.Map;
@@ -11,7 +13,8 @@ import java.util.Map;
  * @Date 2019/6/30 10:56
  * @Created by WDD
  */
-public interface SelectedCourseMapper {
+@Mapper
+public interface SelectedCourseMapper extends BaseMapper<SelectedCourse> {
     List<SelectedCourse> queryList(Map<String, Object> paramMap);
 
     Integer queryCount(Map<String, Object> paramMap);

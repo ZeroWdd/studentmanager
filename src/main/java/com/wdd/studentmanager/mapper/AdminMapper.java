@@ -1,7 +1,8 @@
 package com.wdd.studentmanager.mapper;
 
+import com.baomidou.mybatisplus.core.mapper.BaseMapper;
 import com.wdd.studentmanager.domain.Admin;
-import org.springframework.stereotype.Repository;
+import org.apache.ibatis.annotations.Mapper;
 
 /**
  * @Classname UserMapper
@@ -9,11 +10,8 @@ import org.springframework.stereotype.Repository;
  * @Date 2019/6/24 20:09
  * @Created by WDD
  */
-@Repository
-public interface AdminMapper {
-
-    Admin findByAdmin(Admin admin);
-
+@Mapper
+public interface AdminMapper extends BaseMapper<Admin> {
 
     int editPswdByAdmin(Admin admin);
 }
